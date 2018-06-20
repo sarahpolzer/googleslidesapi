@@ -1,7 +1,7 @@
 #python3.6
 """
-functions to create a presentation, create slides, duplicate slides, and find and replace elements in slides 
-in the Google Slides API.
+functions to create a presentation, duplicate a presentation, find and replace strings, and find and replace
+shapes to images using the Google Slides API
 
 """
 #import function setup_googleslides_api
@@ -9,9 +9,10 @@ from quickstart import *
 #import time packages
 import time
 import datetime
-
+# getting the current time, which will be useful later when forming titles for slides
 now = datetime.datetime.now()
 
+#A function to create a slides presentation with a given title, returning its presentation id
 def create_presentation(title):
     service = setup_googleslides_api()
     body = { 
@@ -21,14 +22,8 @@ def create_presentation(title):
     presentation_id = presentation.get('presentationId')
     return presentation_id
 
-#clients= []
-#presentationids = []
-#for client in clients:
-    #create_presentation(client)
-    #presentationids.append(presentation_id)
-
-
-
+#A function to duplicate a presentation based off of a presentation id, returning the
+#presentation id of the copy
 def duplicate_presentation(presentation_id):
     service = setup_googledrive_api()
     body = {
@@ -40,7 +35,8 @@ def duplicate_presentation(presentation_id):
     print(presentation_copy_id)
     return presentation_copy_id
     
-    
+
+ #A function to conduct a find and replace for strings in a presentation with a given id   
 def find_replace_str(slides_id, before_str, after_str):
     service = setup_googleslides_api()
     body =  {
@@ -64,7 +60,8 @@ def find_replace_str(slides_id, before_str, after_str):
     response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
 
 
-
+#A function to conduct a find and replace, replacing a shape with a specific word in it
+#with an image in a presentation with a given id
 def find_replace_img(slides_id, shape_text, new_img_url):
     service = setup_googleslides_api()
     body = {
@@ -82,23 +79,10 @@ def find_replace_img(slides_id, shape_text, new_img_url):
     }
     response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
 
-# define current date
-
-# replace "june" with datetime.month function
-#find_replace_slide('17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8', '{{mo_3l}}', 'June')
-# replace year with current year
-#find_replace_slide('17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8', '{{year_4d}}', '2018')
-# replace with current client's website
-#find_replace_slide('17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8', '{{org_website}}', 'www.bbgbroker.com')
-    
-#find_replace_img('17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8', '{{org_logo}}', 'https://pbs.twimg.com/profile_images/948761950363664385/Fpr2Oz35_400x400.jpg' )
 
 
-#find_replace_str('17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8','{{year_4d}}', '{}'.format(now.year) )
 
-find_replace_str('17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8', 'six', datetime.date.today().strftime("%B"))
-
-
+#A list of current clients
 clients = ['321 Web Marketing',
                 'BBG',
                 'Beyond Exteriors',
@@ -116,12 +100,12 @@ clients = ['321 Web Marketing',
                 'Comfort Home Care',
                  'Presidential Heat and Air']
 
+#A for loop to create a presentation for each client with a title formatted ({MM}){Client} SEO Briefing {Month} {Year} (
 presentationids = []
 for client in clients:
-    client = "{}".format(now.strftime('%m')) + client + " SEO BRIEFING" + now.strftime('%B')+ " {}". format(now.year)
+    client = "{}".format(now.strftime('%m')) + client + " SEO BRIEFING " + now.strftime('%B')+ " {}". format(now.year)
     presentation_id = create_presentation(client)
     presentationids.append(presentation_id)
-
 
 
 
