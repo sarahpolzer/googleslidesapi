@@ -9,8 +9,9 @@ from quickstart import *
 #import time packages
 import time
 import datetime
+from datetime import date, timedelta
+from dateutil.relativedelta import relativedelta
 # getting the current time, which will be useful later when forming titles for slides
-now = datetime.datetime.now()
 
 #A function to create a slides presentation with a given title, returning its presentation id
 def create_presentation(title):
@@ -79,33 +80,33 @@ def find_replace_img(slides_id, shape_text, new_img_url):
     }
     response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
 
+now = datetime.datetime.now()
+month_before_last = now - relativedelta(months=1)
+month_report = now + relativedelta(months=1)
+next_month = month_report + relativedelta(months = 1)
+pres_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
+org = 'BBG'
+org_website = 'www.bbgbroker.com'
+org_logo = 'https://s16001.pcdn.co/wp-content/themes/kristie/images/updated-bbg-logo.png'
+#slide 1
+
+find_replace_str(pres_id, '{{mo_3l}}', month_report.strftime('%B '))
+find_replace_str(pres_id, '{{year_4d}}', month_report.strftime('%Y'))
+
+find_replace_str(pres_id, '{{org_website}}', org_website)
+
+find_replace_img(pres_id, '{{org_logo}}', org_logo)
 
 
+#slide 2
+find_replace_str(pres_id, '{{nxt_mo}}', next_month.strftime('%B'))
+find_replace_str(pres_id, '{{nxt_mo_year}}', next_month.strftime('%Y'))
 
-#A list of current clients
-clients = ['321 Web Marketing',
-                'BBG',
-                'Beyond Exteriors',
-                'Brown Firm',
-                'Dirt Connections',
-                'Fairfax Christ Lutheran',
-                'FMI',
-                'FVCbank',
-                'Insure My Drone',
-                 'Kangovou',
-                 'KPPB Law',
-                 'MFE Insurance',
-                 'Paw Pals',
-                 'SmartHR',
-                'Comfort Home Care',
-                 'Presidential Heat and Air']
+#slide 3
+find_replace_str(pres_id, '{{last_mo}}', now.strftime('%B'))
+find_replace_str(pres_id, '{{last_mo_last_day}}', (now + relativedelta(day=31)).strftime('%d'))
+find_replace_str(pres_id, '{{last_mo_year}}', "{}".format(now.year))
+find_replace_str(pres_id, '{{org}}', 'BBG')
 
-#A for loop to create a presentation for each client with a title formatted ({MM}){Client} SEO Briefing {Month} {Year} (
-presentationids = []
-for client in clients:
-    client = "{}".format(now.strftime('%m')) + client + " SEO BRIEFING " + now.strftime('%B')+ " {}". format(now.year)
-    presentation_id = create_presentation(client)
-    presentationids.append(presentation_id)
-
-
-
+#slide 7
+find_replace_str(pres_id, '{{mo_before_last}}', month_before_last.strftime('%B'))
