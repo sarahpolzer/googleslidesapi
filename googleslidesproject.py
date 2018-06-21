@@ -79,34 +79,45 @@ def find_replace_img(slides_id, shape_text, new_img_url):
     ]
     }
     response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
-
+#Below functions are used to conduct search/replaces on elements in a Google Slides presentation
+#constants
 now = datetime.datetime.now()
-month_before_last = now - relativedelta(months=1)
-month_report = now + relativedelta(months=1)
-next_month = month_report + relativedelta(months = 1)
+month_current = now
+month_previous = now - relativedelta(months=1)
+month_next = now + relativedelta(months=1)
 pres_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
 org = 'BBG'
 org_website = 'www.bbgbroker.com'
 org_logo = 'https://s16001.pcdn.co/wp-content/themes/kristie/images/updated-bbg-logo.png'
-#slide 1
 
-find_replace_str(pres_id, '{{mo_3l}}', month_report.strftime('%B '))
-find_replace_str(pres_id, '{{year_4d}}', month_report.strftime('%Y'))
 
+mo_3l = month_current.strftime('%B')
+year_4d = month_current.strftime('%Y')
+mo_nxt = month_next.strftime('%B')
+year_nxt_mo= month_next.strftime('%Y')
+mo_last = month_previous.strftime('%B')
+day_last_last_mo = (month_previous + relativedelta(day=31)).strftime('%d')
+year_last_mo = month_previous.strftime('%Y')
+month_before_last = month_previous - relativedelta(months=1)
+mo_before_last = month_before_last.strftime('%B')
+
+#slide 1 search replace
+
+find_replace_str(pres_id, '{{mo_3l}}', mo_3l)
+find_replace_str(pres_id, '{{year_4d}}', year_4d)
 find_replace_str(pres_id, '{{org_website}}', org_website)
-
 find_replace_img(pres_id, '{{org_logo}}', org_logo)
 
+#slide 2 search replace
+find_replace_str(pres_id, '{{mo_nxt}}', mo_nxt)
+find_replace_str(pres_id, '{{year_nxt_mo}}', year_nxt_mo)
 
-#slide 2
-find_replace_str(pres_id, '{{nxt_mo}}', next_month.strftime('%B'))
-find_replace_str(pres_id, '{{nxt_mo_year}}', next_month.strftime('%Y'))
+#slide 3 search replace
+find_replace_str(pres_id, '{{mo_last}}', mo_last)
+find_replace_str(pres_id, '{{day_last_last_mo}}', day_last_last_mo)
+find_replace_str(pres_id, '{{year_last_mo}}', year_last_mo)
+find_replace_str(pres_id, '{{org}}', org)
 
-#slide 3
-find_replace_str(pres_id, '{{last_mo}}', now.strftime('%B'))
-find_replace_str(pres_id, '{{last_mo_last_day}}', (now + relativedelta(day=31)).strftime('%d'))
-find_replace_str(pres_id, '{{last_mo_year}}', "{}".format(now.year))
-find_replace_str(pres_id, '{{org}}', 'BBG')
 
-#slide 7
-find_replace_str(pres_id, '{{mo_before_last}}', month_before_last.strftime('%B'))
+#slide 7 search replace
+find_replace_str(pres_id, '{{mo_before_last}}', mo_before_last)
