@@ -9,14 +9,6 @@ from oauth2client import file, client, tools
 
 
 
-# def create_presentation()
-    # return presentation_id
-
-# def create_slide()
-    # return the slide and make sure it's hooked into the presentation
-
-#def setup_googleslides_api():
-    # Setup the Slides API
 def setup_googleslides_api():
     SCOPES = 'https://www.googleapis.com/auth/presentations'
     store = file.Storage('credentials.json')
@@ -37,7 +29,10 @@ def setup_googledrive_api():
         creds = tools.run_flow(flow, store)
     drive_service = build('drive', 'v3', http=creds.authorize(Http()))
     return drive_service
-    # Call the Slides API
-    #setup_googleslides_api()
-#setup_googleslides_api()
-setup_googledrive_api()
+   
+
+
+
+
+
+    
