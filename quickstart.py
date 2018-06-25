@@ -14,15 +14,17 @@ def setup_googleslides_api():
     store = file.Storage('credentials.json')
     creds = store.get()
     if not creds or creds.invalid:
-        flow = client.flow_from_clientsecrets('client_secret.json', SCOPES)
+        flow = client.flow_from_('client_secret.json', SCOPES)
         creds = tools.run_flow(flow, store)
     slides_service = build('slides', 'v1', http=creds.authorize(Http()))
     return slides_service
 
+    
+
 
 def setup_googledrive_api():
     SCOPES = 'https://www.googleapis.com/auth/drive.file'
-    store = file.Storage('credentialsdrive.json')
+    store = file.Storage('credentials.json')
     creds = store.get()
     if not creds or creds.invalid:
         flow = client.flow_from_clientsecrets('client_secret.json', SCOPES)
@@ -30,9 +32,6 @@ def setup_googledrive_api():
     drive_service = build('drive', 'v3', http=creds.authorize(Http()))
     return drive_service
    
-
-
-
 
 
     
