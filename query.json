@@ -1,1 +1,28 @@
-{"reports": [{"columnHeader": {"dimensions": ["ga:yearMonth"], "metricHeader": {"metricHeaderEntries": [{"name": "ga:newUsers", "type": "INTEGER"}]}}, "data": {"rows": [{"dimensions": ["201712"], "metrics": [{"values": ["5059"]}]}, {"dimensions": ["201801"], "metrics": [{"values": ["6744"]}]}, {"dimensions": ["201802"], "metrics": [{"values": ["8128"]}]}, {"dimensions": ["201803"], "metrics": [{"values": ["10143"]}]}, {"dimensions": ["201804"], "metrics": [{"values": ["11776"]}]}, {"dimensions": ["201805"], "metrics": [{"values": ["13727"]}]}, {"dimensions": ["201806"], "metrics": [{"values": ["10539"]}]}], "totals": [{"values": ["66116"]}], "rowCount": 7, "minimums": [{"values": ["0"]}], "maximums": [{"values": ["13727"]}]}}]}
+{
+  "reports": [
+    {
+      "columnHeader": {
+        "dimensions": ["ga:channelGrouping"],
+        "metricHeader": {
+          "metricHeaderEntries": [{ "name": "ga:newUsers", "type": "INTEGER" }]
+        }
+      },
+      "data": {
+        "rows": [
+          { "dimensions": ["(Other)"], "metrics": [{ "values": ["2"] }] },
+          { "dimensions": ["Direct"], "metrics": [{ "values": ["781"] }] },
+          {
+            "dimensions": ["Organic Search"],
+            "metrics": [{ "values": ["553"] }]
+          },
+          { "dimensions": ["Referral"], "metrics": [{ "values": ["330"] }] },
+          { "dimensions": ["Social"], "metrics": [{ "values": ["123"] }] }
+        ],
+        "totals": [{ "values": ["1789"] }],
+        "rowCount": 5,
+        "minimums": [{ "values": ["2"] }],
+        "maximums": [{ "values": ["781"] }]
+      }
+    }
+  ]
+}
