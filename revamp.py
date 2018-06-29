@@ -10,12 +10,16 @@ from dateutil.parser import parse
 
 view_ids = {}
 view_ids['www.321webmarketing.com'] = '89636352'
-org_name = input('What is the domain name? ')
+# org_name = input('What is the domain name? ')
+org_name = 'www.321webmarketing.com'
 view_id = view_ids['{}'.format(org_name)]
 
-reporting_month = input('What is the month of report? YYYY/MM ')
+# reporting_month = input('What is the month of report? YYYY/MM ')
+ #reporting_month = datetime.strptime(reporting_month, '%Y/%m')
+reporting_month = '2018/01'
 reporting_month = datetime.strptime(reporting_month, '%Y/%m')
-ga_months_back = input('How many months back? ')
+# ga_months_back = input('How many months back? ')
+ga_months_back = '5'
 list_of_months = []
 unique_channel_groups = []
 
@@ -86,7 +90,7 @@ def make_zero_table(months, unique_channel_groupings):
     for month in months:
         table[month] = {}
         for cg in unique_channel_groupings:
-            table[month][cg] = 0
+            table[month][cg] = '0'
     return table
     
     
@@ -106,15 +110,17 @@ def master(reporting_month, ga_months_back, view_id):
     unique_channel_groupings = get_unique_channel_groupings(data)
     table = make_zero_table(months, unique_channel_groupings)
     table = make_table(months, unique_channel_groupings,data, table)
-    print(table)
-    return table
+    data = {}
+    data["months"] = months
+    data["channels"] = unique_channel_groupings
+    data["data"] = table
+    return data
     
 
 
-def create_google_slides_data_table(table, slides_id, page_Id, table_Id):
-    for item in table:
-        item = item
-        break 
+def create_google_slides_data_table(data, slides_id, page_Id, table_Id):
+    num_rows = len(data["months"]) + 1
+    num_cols = len(data["channels"]) + 1
     service = setup_googleslides_api()
     body = {
             "requests": [
@@ -124,8 +130,8 @@ def create_google_slides_data_table(table, slides_id, page_Id, table_Id):
             "elementProperties": {
                 "pageObjectId": page_Id,
             },
-            "rows": len(table[item]),
-             "columns": len(table)
+            "rows": num_rows,
+             "columns": num_cols
             }
         }
     ]
@@ -133,11 +139,82 @@ def create_google_slides_data_table(table, slides_id, page_Id, table_Id):
     response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
 
 
-table = master(reporting_month, ga_months_back, view_id)
+
+
+def edit_google_slides_row_data(data, slides_id, table_Id):
+    service = setup_googleslides_api()
+    cg_rows = data["channels"]
+    for row in range(len(cg_rows)):
+        body = {
+            "requests": [     
+                {
+                    "insertText": {
+                        "objectId": table_Id,
+                        "cellLocation": {
+                            "rowIndex": row + 1,
+                            "columnIndex": 0
+                            },
+                            "text": cg_rows[row],
+                            "insertionIndex": 0
+                            }
+                        }
+                    ]
+                }
+        response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
+
+def edit_google_slides_col_data(data,slides_id, table_Id):
+    service = setup_googleslides_api()
+    mo_cols = data["months"]
+    for col in range(len(mo_cols)):
+        body = {
+            "requests": [     
+                {
+                    "insertText": {
+                        "objectId": table_Id,
+                        "cellLocation": {
+                            "rowIndex": 0,
+                            "columnIndex": col + 1
+                            },
+                            "text": mo_cols[col],
+                            "insertionIndex": 0
+                            }
+                        }
+                    ]
+                }
+        response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
+
+def insert_google_slides_cell_data(data, slides_id, table_Id):
+    service = setup_googleslides_api()
+    data_cells = data["data"]
+    mo_cols = data["months"]
+    cg_rows = data["channels"]
+    for col in range(len(mo_cols)):
+        for row in range(len(cg_rows)):
+            body = {
+                "requests": [     
+                {
+                    "insertText": {
+                        "objectId": table_Id,
+                        "cellLocation": {
+                            "rowIndex": row+1,
+                            "columnIndex": col + 1
+                            },
+                            "text": data_cells[mo_cols[col]][cg_rows[row]],
+                            "insertionIndex": 0
+                            }
+                        }
+                    ]
+                }
+            response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
+        
+
+    
+data = master(reporting_month, ga_months_back, view_id)
 slides_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
 page_id = 'g1edf554207_0_7'
 table_Id = '123456'
-create_google_slides_data_table(table, slides_id, page_id, table_Id)
-
-    
+create_google_slides_data_table(data, slides_id, page_id, table_Id)
+edit_google_slides_row_data(data,slides_id, table_Id)
+edit_google_slides_col_data(data, slides_id, table_Id)
+insert_google_slides_cell_data(data, slides_id, table_Id)
 
