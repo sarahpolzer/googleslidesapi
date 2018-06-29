@@ -81,17 +81,7 @@ def get_unique_channel_groupings(data):
     return unique_channel_groupings
 
 
-
-
-def anthony(reporting_month, ga_months_back, view_id):
-    months = get_months(reporting_month, ga_months_back)
-    data = get_table(months, view_id)
-    unique_channel_groupings = get_unique_channel_groupings(data)
-    table = make_zero_matrix(months, unique_channel_groupings)
-    make_table(months, unique_channel_groupings,data, table)
-
-
-def make_zero_matrix(months, unique_channel_groupings):
+def make_zero_table(months, unique_channel_groupings):
     table = {}
     for month in months:
         table[month] = {}
@@ -104,11 +94,18 @@ def make_zero_matrix(months, unique_channel_groupings):
 def make_table(months, unique_channel_groupings,data, table):
     for month in months:
         for cg in unique_channel_groupings:
-            try:
+            if cg in data[month]:
                 table[month][cg] = data[month][cg]
-            except:
-                table[month][cg] = table[month][cg]
-    return table
     print(table)
+            
 
-anthony(reporting_month, ga_months_back, view_id)
+
+def master(reporting_month, ga_months_back, view_id):
+    months = get_months(reporting_month, ga_months_back)
+    data = get_table(months, view_id)
+    unique_channel_groupings = get_unique_channel_groupings(data)
+    table = make_zero_matrix(months, unique_channel_groupings)
+    make_table(months, unique_channel_groupings,data, table)
+
+
+master(reporting_month, ga_months_back, view_id)
