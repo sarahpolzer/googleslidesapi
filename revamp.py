@@ -1,12 +1,12 @@
 from helloanalytics import initialize_analyticsreporting 
+from quickstart import *
 import json 
-import pandas 
 import time
 from datetime import datetime
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
 from dateutil.parser import parse
-import pandas as pd
+
 
 view_ids = {}
 view_ids['www.321webmarketing.com'] = '89636352'
@@ -96,7 +96,7 @@ def make_table(months, unique_channel_groupings,data, table):
         for cg in unique_channel_groupings:
             if cg in data[month]:
                 table[month][cg] = data[month][cg]
-    print(table)
+    return table
             
 
 
@@ -104,8 +104,40 @@ def master(reporting_month, ga_months_back, view_id):
     months = get_months(reporting_month, ga_months_back)
     data = get_table(months, view_id)
     unique_channel_groupings = get_unique_channel_groupings(data)
-    table = make_zero_matrix(months, unique_channel_groupings)
-    make_table(months, unique_channel_groupings,data, table)
+    table = make_zero_table(months, unique_channel_groupings)
+    table = make_table(months, unique_channel_groupings,data, table)
+    print(table)
+    return table
+    
 
 
-master(reporting_month, ga_months_back, view_id)
+def create_google_slides_data_table(table, slides_id, page_Id, table_Id):
+    for item in table:
+        item = item
+        break 
+    service = setup_googleslides_api()
+    body = {
+            "requests": [
+        {
+            "createTable": {
+            "objectId": table_Id,
+            "elementProperties": {
+                "pageObjectId": page_Id,
+            },
+            "rows": len(table[item]),
+             "columns": len(table)
+            }
+        }
+    ]
+    }
+    response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
+
+
+table = master(reporting_month, ga_months_back, view_id)
+slides_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
+page_id = 'g1edf554207_0_7'
+table_Id = '123456'
+create_google_slides_data_table(table, slides_id, page_id, table_Id)
+
+    
+
