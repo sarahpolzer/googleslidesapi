@@ -1,8 +1,7 @@
+app = Flask(__name__)
 from flask import Flask
 from flask import Markup
-from flask import Flask
 from flask import render_template
-app = Flask(__name__)
 import json 
 from helloanalytics import initialize_analyticsreporting 
 from quickstart import *
@@ -13,24 +12,31 @@ from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
 from dateutil.parser import parse
 
-
+#At the beginning you should define the organization name (domain name) to get the View ID so 
+#the API call can be made
 view_ids = {}
 view_ids['www.321webmarketing.com'] = '89636352'
 # org_name = input('What is the domain name? ')
 org_name = 'www.321webmarketing.com'
 view_id = view_ids['{}'.format(org_name)]
 
+#It is just as important to know the reporting month
+
 # reporting_month = input('What is the month of report? YYYY/MM ')
  #reporting_month = datetime.strptime(reporting_month, '%Y/%m')
 reporting_month = '2018/02'
+#Converting reporting month into YYYY/MM format
 reporting_month = datetime.strptime(reporting_month, '%Y/%m')
 # ga_months_back = input('How many months back? ')
+#And as important to know how many months you're going back in the records
 ga_months_back = '7'
+
+#These lists will be used later on to hoard data of sorts
 list_of_months = []
 unique_channel_groups =[]
 
 
-
+#A function to get a list of all of the months we will be examining for channel groupings
 def get_months(reporting_month,ga_months_back):
     for i in range(int(ga_months_back)):
         month_behind = reporting_month - relativedelta(months = i)
@@ -38,7 +44,7 @@ def get_months(reporting_month,ga_months_back):
         list_of_months.append(month_behind)
     return list_of_months
 
-
+#A function to return a dictionary of new users, per month, by channel grouping
 def get_new_users(month):
     analytics = initialize_analyticsreporting()
     dict = {}
@@ -72,6 +78,7 @@ def get_new_users(month):
     new_users_by_channel_grouping = dict
     return new_users_by_channel_grouping
 
+#This function makes table out of dictionary
 def get_table(list_of_months,view_id):
     data = {}
     for month in list_of_months:
@@ -79,7 +86,7 @@ def get_table(list_of_months,view_id):
     return data
 
     
-
+#This function makes a list of all of the unique channel groupings
 def get_unique_channel_groupings(data): 
     unique_channel_groupings = []
     months = data.keys()
@@ -90,7 +97,8 @@ def get_unique_channel_groupings(data):
                 unique_channel_groupings.append(channel)
     return unique_channel_groupings
 
-
+#This function makes a table with all 0s so that no channel grouping gets left behind if a 
+#channel grouping had a value of 0 that month
 def make_zero_table(months, unique_channel_groupings):
     table = {}
     for month in months:
@@ -100,7 +108,7 @@ def make_zero_table(months, unique_channel_groupings):
     return table
     
     
-
+#This function fills in the 0 data table
 def make_table(months, unique_channel_groupings,data, table):
     for month in months:
         for cg in unique_channel_groupings:
@@ -109,7 +117,8 @@ def make_table(months, unique_channel_groupings,data, table):
     return table
             
 
-
+#This function makes an interestingly structured dictionary containing months, channels, and data
+#from table
 def get_data(reporting_month, ga_months_back, view_id):
     months = get_months(reporting_month, ga_months_back)
     data = get_table(months, view_id)
@@ -121,6 +130,9 @@ def get_data(reporting_month, ga_months_back, view_id):
     data["channels"] = unique_channel_groupings
     data["data"] = table
     return data
+
+#Unfortunately, I need this data to work on flask, and didn't feel like going back and changing everything
+#so this function rearranges the dictionary so it can be looped through on the html (bootstrap) template
 
 def rearrange_dict_for_flask(data):
     data_dict = {}
@@ -152,12 +164,14 @@ def rearrange_dict_for_flask(data):
     data_dict["(Other)"] = Other
     return data_dict
 
+#This kinda just does what I said above
 def data_for_flask(reporting_month, ga_months_back, view_id):
     data = get_data(reporting_month, ga_months_back, view_id)
     data_dict = rearrange_dict_for_flask(data)
     return data_dict
 
 
+#This function/app route gets the data for flask and plugs it into a Bootstrap template
 
 @app.route('/data_table')
 def data_for_template():
