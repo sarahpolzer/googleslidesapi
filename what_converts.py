@@ -14,8 +14,8 @@ reporting_month = '2018/04'
 reporting_month = datetime.strptime(reporting_month, '%Y/%m')
 ga_months_back = '5'
 
-list_of_months = []
 
+list_of_months = []
 
 def get_months(reporting_month,ga_months_back):
     for i in range(int(ga_months_back)):
@@ -45,7 +45,9 @@ def pull_lead_data(list_of_months):
                  params = params
                   )
             json_data = json.loads(x.text)
+            dict_two[month] = lead
             dict_two[month][lead] = json_data["total_leads"]
+            
         """x = x.json()
         with open("what_converts.json", "a") as outfile:
             json_dump(x, outfile)"""
@@ -53,9 +55,18 @@ def pull_lead_data(list_of_months):
     return dict_two
 
 
-pull_lead_data(['2018/02', '2018/01'])
 
 
 
+
+def master(reporting_month, ga_months_back):
+    mo_list = get_months(reporting_month, ga_months_back)
+    dict_two = pull_lead_data(mo_list)
+    return dict_two
+
+
+
+
+master(reporting_month,ga_months_back)
 
    
