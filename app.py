@@ -1,5 +1,6 @@
-app = Flask(__name__)
+
 from flask import Flask
+app = Flask(__name__)
 from flask import Markup
 from flask import render_template
 import json 
@@ -24,12 +25,12 @@ view_id = view_ids['{}'.format(org_name)]
 
 # reporting_month = input('What is the month of report? YYYY/MM ')
  #reporting_month = datetime.strptime(reporting_month, '%Y/%m')
-reporting_month = '2018/02'
+reporting_month = '2018/04'
 #Converting reporting month into YYYY/MM format
 reporting_month = datetime.strptime(reporting_month, '%Y/%m')
 # ga_months_back = input('How many months back? ')
 #And as important to know how many months you're going back in the records
-ga_months_back = '7'
+ga_months_back = '5'
 
 #These lists will be used later on to hoard data of sorts
 list_of_months = []
@@ -136,50 +137,40 @@ def get_data(reporting_month, ga_months_back, view_id):
 
 def rearrange_dict_for_flask(data):
     data_dict = {}
-    Direct = []
-    Organic_search = []
-    Referral = []
-    Social = []
-    Other = []
     months = data["months"]
     channels = data["channels"]
     data = data["data"]
+    intermediate_list = []
+    channel_list = []
+    total = 0
+    total_lst = []
     data_dict["months"] = months
     for month in months:
-        for channel in channels:
-            if channel == 'Direct':
-                Direct.append(data[month][channel])
-            if channel == 'Organic Search':
-                Organic_search.append(data[month][channel])
-            if channel=='Referral':
-                Referral.append(data[month][channel])
-            if channel=='Social':
-                Social.append(data[month][channel])
-            if channel == '(Other)':
-                Other.append(data[month][channel])
-    data_dict["Direct"] = Direct
-    data_dict["Organic Search"] = Organic_search
-    data_dict["Referral"] = Referral
-    data_dict["Social"] = Social
-    data_dict["(Other)"] = Other
+        intermediate_list.append(data[month])
+    for item in intermediate_list:
+        for key in item.keys():
+            channel_list.append(key + ":" + item[key])
+    for channel in channels:
+        lst = []
+        for item in channel_list:
+            if channel in item:
+                item = item.replace(channel, "").replace(":", "")
+                lst.append(item)
+                data_dict[channel] = lst
+    print(data_dict)
     return data_dict
-
 #This kinda just does what I said above
 def data_for_flask(reporting_month, ga_months_back, view_id):
     data = get_data(reporting_month, ga_months_back, view_id)
     data_dict = rearrange_dict_for_flask(data)
     return data_dict
 
-
+data_dict = data_for_flask(reporting_month, ga_months_back, view_id)
 #This function/app route gets the data for flask and plugs it into a Bootstrap template
 
 @app.route('/data_table')
 def data_for_template():
-    view_id = '89636352'
-    reporting_month = '2018/02'
-    reporting_month = datetime.strptime(reporting_month, '%Y/%m')
-    ga_months_back = '4'
-    data = data_for_flask(reporting_month, ga_months_back, view_id)
+    data = data_dict
     return render_template('datatable.html', data=data)
 
 
