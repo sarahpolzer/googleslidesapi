@@ -12,26 +12,26 @@
         <style>
           .traffic-source {
             display: flex;
-            align-items: center;
+            align: center;
           }
         .color-legend {
           display: inline-block;
           height: 20px;
           width: 20px;
           background-color: #777;
-          margin-left: 0.4rem;
+          margin-right: 0.4rem;
         }
         .color-legend.Dire {
-          background-color: tomato;
+          background-color: navy;
         }
         .color-legend.Orga {
-          background-color: blueviolet;
+          background-color: red;
         }
         .color-legend.Refe {
-          background-color: greenyellow;
+          background-color: yellow;
         }
         .color-legend.Soci {
-          background-color: magenta;
+          background-color: blue ;
         }
       </style>
 </head>
@@ -55,7 +55,7 @@
           {% for key in data %}
           {% if key != 'months' %}
           <tr>
-            <th scope="row"><span class="traffic-source">{{key}}<span class="color-legend {{key[:4]}}"></span></span></th>
+            <th scope="row"><span class="traffic-source"><span class="color-legend {{key[:4]}}"></span> {{key}}</span></th>
             {% for value in data[key] %}
             <td>{{value}}</td>
             {% endfor %}
