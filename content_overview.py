@@ -95,18 +95,18 @@ def edit_google_slides_data(table_dict, slides_Id, table_Id):
     service = setup_googleslides_api()
     data_cells = table_dict['data']
     cols = table_dict['columns']
-    for col in range(len(mo_cols)):
-        for row in range(len(data_cells)+1):
+    for item in range(len(data_cells):
+        for col in range(len(data_cells[0]))
             body = {
                 "requests": [     
                 {
                     "insertText": {
                         "objectId": table_Id,
                         "cellLocation": {
-                            "rowIndex": row+1,
+                            "rowIndex": item+1,
                             "columnIndex": col 
                             },
-                            "text": data_cells,
+                            "text": data_cells['item'][col],
                             "insertionIndex": 0
                             }
                         }
