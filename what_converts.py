@@ -1,5 +1,9 @@
+
+from flask import Flask
+app = Flask(__name__)
+from flask import Markup
+from flask import render_template
 import requests
-import json 
 import json 
 import time
 from datetime import datetime
@@ -14,8 +18,8 @@ reporting_month = '2018/04'
 reporting_month = datetime.strptime(reporting_month, '%Y/%m')
 ga_months_back = '5'
 
-list_of_months = []
 
+list_of_months = []
 
 def get_months(reporting_month,ga_months_back):
     for i in range(int(ga_months_back)):
@@ -25,9 +29,13 @@ def get_months(reporting_month,ga_months_back):
     return list_of_months
 
 def pull_lead_data(list_of_months):
+    n = 0
+    month_lead = {}
+    lead_dict = {}
     lead_types = ['phone_call', 'web_form']
-    dict_two = {}
-    for month in list_of_months:   
+    lead_dict['months'] = list_of_months
+    for month in list_of_months:  
+        lead_dict = {} 
         startdate = datetime.strptime(month, '%Y/%m')
         enddate = startdate + relativedelta(months = 1)
         startdate = datetime.strftime(startdate, '%Y-%m') + '-01'
@@ -45,17 +53,61 @@ def pull_lead_data(list_of_months):
                  params = params
                   )
             json_data = json.loads(x.text)
-            dict_two[month][lead] = json_data["total_leads"]
-        """x = x.json()
-        with open("what_converts.json", "a") as outfile:
-            json_dump(x, outfile)"""
-    print(dict_two)
-    return dict_two
+            lead_dict[lead] = json_data[ "total_leads" ]
+            month_lead[month] = lead_dict
+    print(month_lead)
+    return month_lead
+
+def rearrange_data_for_flask(list_of_months, month_lead):
+    rearranged_dict = {}
+    lead_types = ['phone_call', 'web_form']
+    phone_call = []
+    web_form = []
+    for month in list_of_months:
+        for lead_type in lead_types:
+            if month_lead[month][lead_type] and lead_type=='phone_call':
+                phone_call.append(month_lead[month][lead_type])
+            else:
+                web_form.append(month_lead[month][lead_type])
+    #for month in list_of_months:
+           # month = datetime.strptime(month, '%Y/%m')
+          # month = datetime.strftime(month, '%B')
+    for i in range(len(list_of_months)):
+        month = datetime.strptime(list_of_months[i], '%Y/%m')
+        month = datetime.strftime(month, '%B')
+        list_of_months[i] = month
+    rearranged_dict['months'] = list_of_months
+    rearranged_dict['Phone Call'] = phone_call
+    rearranged_dict['Web Form'] = web_form
+    print(rearranged_dict)
+    return rearranged_dict            
+                     
+            
+            
+                
 
 
-pull_lead_data(['2018/02', '2018/01'])
+
+
+
+def master(reporting_month, ga_months_back):
+    mo_list = get_months(reporting_month, ga_months_back)
+    month_lead = pull_lead_data(mo_list)
+    rearranged_dict = rearrange_data_for_flask(mo_list, month_lead)
+    return rearranged_dict
 
 
 
 
-   
+rearranged_dict = master(reporting_month,ga_months_back)
+
+@app.route('/data_table_leads')
+def data_for_template():
+    data = rearranged_dict
+    return render_template('data_table_leads.html', data=data)
+
+
+
+
+if __name__ == "__main__":
+    app.run(host='0.0.0.0', port=5001)
