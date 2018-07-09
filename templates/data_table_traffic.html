@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+        <title>Bootstrap Example</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+        <style>
+          .traffic-source {
+            display: flex;
+            align-items: center;
+          }
+        .color-legend {
+          display: inline-block;
+          height: 20px;
+          width: 20px;
+          background-color: #777;
+          margin-left: 0.4rem;
+        }
+        .color-legend.Dire {
+          background-color: tomato;
+        }
+        .color-legend.Orga {
+          background-color: blueviolet;
+        }
+        .color-legend.Refe {
+          background-color: greenyellow;
+        }
+        .color-legend.Soci {
+          background-color: magenta;
+        }
+      </style>
+</head>
+
+
+<body>
+<table class="table table-striped">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Traffic Source</th>
+            {% for key in data %}
+            {% if key == 'months' %}
+            {% for value in data[key] %}
+            <th scope="col">{{value}}</th>
+            {% endfor %}
+            {% endif %}
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for key in data %}
+          {% if key != 'months' %}
+          <tr>
+            <th scope="row"><span class="traffic-source">{{key}}<span class="color-legend {{key[:4]}}"></span></span></th>
+            {% for value in data[key] %}
+            <td>{{value}}</td>
+            {% endfor %}
+            {% endif %} 
+          {% endfor %}
+          </tr>
+        </tbody>
+      </table>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/"></script>
+</body>
+</html>
