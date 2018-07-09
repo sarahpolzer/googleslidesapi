@@ -84,9 +84,7 @@ def rearrange_data_for_flask(list_of_months, month_lead):
                      
             
             
-                
-
-
+        
 
 
 
@@ -95,7 +93,6 @@ def master(reporting_month, ga_months_back):
     month_lead = pull_lead_data(mo_list)
     rearranged_dict = rearrange_data_for_flask(mo_list, month_lead)
     return rearranged_dict
-
 
 
 
@@ -108,6 +105,15 @@ def data_for_template():
 
 
 
-
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=5001)
+def master(reporting_month, ga_months_back):
+    mo_list = get_months(reporting_month, ga_months_back)
+    dict_two = pull_lead_data(mo_list)
+    return dict_two
+
+
+
+
+
+   
