@@ -4,18 +4,23 @@ functions to create a presentation, duplicate a presentation, find and replace s
 shapes to images using the Google Slides API
 
 """
-#import function setup_googleslides_api
-from quickstart import *
+
+#from quickstart import *
 #import time packages
 import time
 import datetime
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
+import initialize_apis
+from initialize_apis import get_slides_and_drive_apis
+#from get_slides_and_drive_apis import setup_googleslides_api, setup_googledrive_api
+slides_service = get_slides_and_drive_apis.setup_googleslides_api()
+drive_service =  get_slides_and_drive_apis.setup_googledrive_api()
 # getting the current time, which will be useful later when forming titles for slides
 
 #A function to create a slides presentation with a given title, returning its presentation id
 def create_presentation(title):
-    service = setup_googleslides_api()
+    service = slides_service
     body = { 
         'title': str(title)
     }
@@ -26,7 +31,7 @@ def create_presentation(title):
 #A function to duplicate a presentation based off of a presentation id, returning the
 #presentation id of the copy
 def duplicate_presentation(presentation_id):
-    service = setup_googledrive_api()
+    service = drive_service
     body = {
         'name': 'copy'
     }
@@ -39,7 +44,7 @@ def duplicate_presentation(presentation_id):
 
  #A function to conduct a find and replace for strings in a presentation with a given id   
 def find_replace_str(slides_id, before_str, after_str):
-    service = setup_googleslides_api()
+    service = slides_service
     body =  {
         "requests" : [
             {
@@ -64,7 +69,7 @@ def find_replace_str(slides_id, before_str, after_str):
 #A function to conduct a find and replace, replacing a shape with a specific word in it
 #with an image in a presentation with a given id
 def find_replace_img(slides_id, shape_text, new_img_url):
-    service = setup_googleslides_api()
+    service = slides_service
     body = {
         "requests": [
         {
