@@ -178,9 +178,9 @@ def format_header_text(table_dict, slides_Id, table_Id):
                             }
                         },
                         "bold": True,
-                        "fontFamily": "Cambria",
+                        "fontFamily": "Arial",
                         "fontSize": {
-                            "magnitude": 18,
+                            "magnitude": 10,
                             "unit": "PT"
                         }
                         },
@@ -194,6 +194,47 @@ def format_header_text(table_dict, slides_Id, table_Id):
             }
         response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
 
+def format_cell_text(table_dict, slides_Id, table_Id):
+    service = slides_service
+    cols = table_dict['columns']
+    rows = table_dict['data']
+    for row in range(len(rows)):
+        for col in range(len(cols)):
+            body = { 
+                "requests": [
+                    {
+                        "updateTextStyle": {
+                            "objectId": table_Id,
+                            "cellLocation": {
+                            "rowIndex": row+1,
+                            "columnIndex": col
+                            },
+                            "style": {
+                            "foregroundColor": {
+                                "opaqueColor": {
+                                "rgbColor": {
+                                    "red": 0.0,
+                                    "green": 0.0,
+                                    "blue": 0.0
+                                }
+                                }
+                            },
+                            "bold": False,
+                            "fontFamily": "Arial",
+                            "fontSize": {
+                                "magnitude": 10,
+                                "unit": "PT"
+                            }
+                            },
+                            "textRange": {
+                            "type": "ALL"
+                            },
+                            "fields": "foregroundColor,bold,fontFamily,fontSize"
+                        }
+                        }, 
+                    ]
+                }
+            response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
 
 
 def master(slides_id, page_Id, table_Id):
@@ -203,6 +244,7 @@ def master(slides_id, page_Id, table_Id):
     edit_google_slides_data(table_dict, slides_id, table_Id)
     format_header_row(table_dict, slides_id, table_Id)
     format_header_text(table_dict, slides_id, table_Id)
+    format_cell_text(table_dict, slides_id, table_Id)
 
 slides_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
 page_Id = 'g1edf554207_0_7'
