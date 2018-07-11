@@ -1,10 +1,14 @@
 
-from quickstart import *
+import initialize_apis
+from initialize_apis import get_slides_and_drive_apis
+
 #import time packages
 import time
 import datetime
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
+
+slides_service = get_slides_and_drive_apis.setup_googleslides_api()
 
 def content_posted_report_month():
     now = datetime.datetime.now()
@@ -14,14 +18,12 @@ def content_posted_report_month():
     print("Answer these questions to provide information about content being posted in {}".format(report_month))
     for article in range(3):
         article_list = []
-        content_name = input("What is the content name")
+        title = input("What is the content title")
         content_type = input("What is the content type")
-        post_date = input("On what date YYYY/MM")
-        article_list.append(content_name)
+        article_list.append(title)
         article_list.append(content_type)
-        article_list.append(post_date)
         master_list.append(article_list)
-    table_dict['columns'] = ['content_name', 'content_type', 'postdate']
+    table_dict['columns'] = ['Title', 'Type']
     table_dict['data'] = master_list
     print(table_dict)
     return table_dict
@@ -38,11 +40,11 @@ def content_posted_next_month():
     for article in range(3):
         article_list = []
         title = input("What is the content title? ")
-        content = input("What is the content type? ")
+        content_type = input("What is the content type? ")
         article_list.append(title)
-        article_list.append(content)
+        article_list.append(content_type)
         master_list.append(article_list)
-    table_dict['columns'] = ['Title', 'Content']
+    table_dict['columns'] = ['Title', 'Type']
     table_dict['data'] = master_list
     return table_dict
 
@@ -50,7 +52,7 @@ def content_posted_next_month():
 def create_google_slides_data_table(table_dict, slides_id, page_Id, table_Id):
     num_rows = len(table_dict['data']) + 1
     num_cols = len(table_dict['columns'])
-    service = setup_googleslides_api()
+    service = slides_service
     body = {
             "requests": [
         {
@@ -71,7 +73,7 @@ def create_google_slides_data_table(table_dict, slides_id, page_Id, table_Id):
 
 
 def edit_google_slides_col_data(table_dict,slides_id, table_Id):
-    service = setup_googleslides_api()
+    service = slides_service
     cols = table_dict["columns"]
     for col in range(len(cols)):
         body = {
@@ -92,7 +94,7 @@ def edit_google_slides_col_data(table_dict,slides_id, table_Id):
         response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
 
 def edit_google_slides_data(table_dict, slides_Id, table_Id):
-    service = setup_googleslides_api()
+    service = slides_service
     rows = table_dict['data']
     cols = table_dict['columns']
     for row in range(len(rows)):
@@ -115,7 +117,7 @@ def edit_google_slides_data(table_dict, slides_Id, table_Id):
             response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
 
 def format_header_row(table_dict, slides_Id, table_Id):
-    service = setup_googleslides_api()
+    service = slides_service
     cols = table_dict['columns']
     body = { 
             "requests": [
@@ -153,7 +155,7 @@ def format_header_row(table_dict, slides_Id, table_Id):
     response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
 
 def format_header_text(table_dict, slides_Id, table_Id):
-    service = setup_googleslides_api()
+    service = slides_service
     cols = table_dict['columns']
     for col in range(len(cols)):
         body = { 
