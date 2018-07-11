@@ -9,23 +9,25 @@ from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
 
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
+slides_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
+page_Id = 'g1edf554207_0_7'
+table_Id = '123456'
 
 def content_posted_report_month():
     now = datetime.datetime.now()
-    report_month = now.strftime('%Y/%m')
+    report_month = now.strftime('%B, %Y')
     master_list = []
     table_dict = {}
     print("Answer these questions to provide information about content being posted in {}".format(report_month))
     for article in range(3):
         article_list = []
-        title = input("What is the content title")
-        content_type = input("What is the content type")
+        title = input("What is the content's title? ")
+        content_type = input("What is the content's type? ")
         article_list.append(title)
         article_list.append(content_type)
         master_list.append(article_list)
     table_dict['columns'] = ['Title', 'Type']
     table_dict['data'] = master_list
-    print(table_dict)
     return table_dict
 
 
@@ -33,7 +35,7 @@ def content_posted_report_month():
 def content_posted_next_month():
     now = datetime.datetime.now()
     next_month = now + relativedelta(months=1)
-    next_month = next_month.strftime('%Y/%m')
+    next_month = next_month.strftime('%B, %Y')
     master_list = []
     table_dict = {}
     print("Answer these questions to provide information about content being posted in {}".format(next_month))
@@ -238,7 +240,7 @@ def format_cell_text(table_dict, slides_Id, table_Id):
 
 
 def master(slides_id, page_Id, table_Id):
-    table_dict = content_posted_next_month()
+    table_dict = content_posted_report_month()
     create_google_slides_data_table(table_dict, slides_id, page_Id, table_Id)
     edit_google_slides_col_data(table_dict, slides_id, table_Id)
     edit_google_slides_data(table_dict, slides_id, table_Id)
@@ -246,8 +248,5 @@ def master(slides_id, page_Id, table_Id):
     format_header_text(table_dict, slides_id, table_Id)
     format_cell_text(table_dict, slides_id, table_Id)
 
-slides_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
-page_Id = 'g1edf554207_0_7'
-table_Id = '123456'
 
 master(slides_id, page_Id, table_Id)
