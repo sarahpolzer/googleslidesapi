@@ -1,17 +1,14 @@
-
 from flask import Flask
 app = Flask(__name__)
 from flask import Markup
 from flask import render_template
-import json 
-from helloanalytics import initialize_analyticsreporting 
-from quickstart import *
 import json 
 import time
 from datetime import datetime
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
 from dateutil.parser import parse
+from initialize_apis import get_google_analytics_api
 
 #At the beginning you should define the organization name (domain name) to get the View ID so 
 #the API call can be made
@@ -25,12 +22,12 @@ view_id = view_ids['{}'.format(org_name)]
 
 # reporting_month = input('What is the month of report? YYYY/MM ')
  #reporting_month = datetime.strptime(reporting_month, '%Y/%m')
-reporting_month = '2018/04'
+reporting_month = '2018/02'
 #Converting reporting month into YYYY/MM format
 reporting_month = datetime.strptime(reporting_month, '%Y/%m')
 # ga_months_back = input('How many months back? ')
 #And as important to know how many months you're going back in the records
-ga_months_back = '5'
+ga_months_back = '10'
 
 #These lists will be used later on to hoard data of sorts
 list_of_months = []
@@ -47,7 +44,8 @@ def get_months(reporting_month,ga_months_back):
 
 #A function to return a dictionary of new users, per month, by channel grouping
 def get_new_users(month):
-    analytics = initialize_analyticsreporting()
+    analytics = get_google_analytics_api.initialize_analyticsreporting()
+    analytics = analytics
     dict = {}
     startdate = datetime.strptime(month, '%Y/%m')
     enddate = startdate + relativedelta(months = 1)
@@ -143,21 +141,26 @@ def rearrange_dict_for_flask(data):
     intermediate_list = []
     channel_list = []
     total = 0
-    total_lst = []
-    data_dict["months"] = months
+    total_lst = [] 
+    #The purpose of these loops is to change the structure of the data
+    #so that it can be put into a flask html template
     for month in months:
         intermediate_list.append(data[month])
     for item in intermediate_list:
         for key in item.keys():
             channel_list.append(key + ":" + item[key])
+    for i in range(len(months)):
+        month = datetime.strptime(months[i], '%Y/%m')
+        month = datetime.strftime(month, '%b')
+        months[i] = month     
+    data_dict["months"] = months[::-1]
     for channel in channels:
         lst = []
         for item in channel_list:
             if channel in item:
                 item = item.replace(channel, "").replace(":", "")
                 lst.append(item)
-                data_dict[channel] = lst
-    print(data_dict)
+                data_dict[channel] = lst[::-1]
     return data_dict
 #This kinda just does what I said above
 def data_for_flask(reporting_month, ga_months_back, view_id):
@@ -171,7 +174,7 @@ data_dict = data_for_flask(reporting_month, ga_months_back, view_id)
 @app.route('/data_table')
 def data_for_template():
     data = data_dict
-    return render_template('datatable.html', data=data)
+    return render_template('data_table_traffic.html', data=data)
 
 
 if __name__ == "__main__":
