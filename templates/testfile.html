@@ -15,16 +15,16 @@ var ctx = document.getElementById('chart');
 var myChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels:[ {% for item in data['months'] %}git,
+    labels:{{ data['months'] | safe }},
     datasets: [
       {
         label: 'Phone Call',
-        data: [1,2,3,4,5,6],
+        data: {{ data['Phone Call'] | safe }},
         backgroundColor: '#D6E9C6',
       },
       {
         label: 'Web Form',
-        data: [1,2,3,4,5,6],
+        data: {{ data['Web Form'] | safe }},
         backgroundColor: '#FAEBCC',
       },
     ]
