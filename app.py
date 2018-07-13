@@ -94,6 +94,8 @@ def get_unique_channel_groupings(data):
         for channel in channels:
             if  channel not in unique_channel_groupings:
                 unique_channel_groupings.append(channel)
+    first, organic = 0, unique_channel_groupings.index('Organic Search')
+    unique_channel_groupings[organic], unique_channel_groupings[first] = unique_channel_groupings[first], unique_channel_groupings[organic]
     return unique_channel_groupings
 
 #This function makes a table with all 0s so that no channel grouping gets left behind if a 
@@ -169,6 +171,7 @@ def data_for_flask(reporting_month, ga_months_back, view_id):
     return data_dict
 
 data_dict = data_for_flask(reporting_month, ga_months_back, view_id)
+print(data_dict)
 #This function/app route gets the data for flask and plugs it into a Bootstrap template
 
 @app.route('/data_table')
@@ -176,6 +179,11 @@ def data_for_template():
     data = data_dict
     return render_template('data_table_traffic.html', data=data)
 
+@app.route('/traffic_chart')
+def data_for_chart():
+    data = data_dict
+    return render_template('traffic_chart.html', data=data)
+
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5001)
+    app.run(port=5001)
