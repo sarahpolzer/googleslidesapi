@@ -15,7 +15,7 @@ var ctx = document.getElementById('chart');
 var myChart = new Chart(ctx, {
   type: 'bar',
   data: {
-    labels: ['June', 'July', 'August', 'September', 'October', 'November'],
+    labels:[ {% for item in data['months'] %}git,
     datasets: [
       {
         label: 'Phone Call',
