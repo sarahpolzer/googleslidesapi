@@ -5,7 +5,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 
 SCOPES = ['https://www.googleapis.com/auth/analytics']
-KEY_FILE_LOCATION ='/Users/Sarah/dev/googleslidesapi/credentials/service_account_creds.json'
+KEY_FILE_LOCATION ='/Users/sarahpolzer/dev/googleslidesapi/credentials/service_account_creds.json'
 VIEW_ID = '89636352'
 
 

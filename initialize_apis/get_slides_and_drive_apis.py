@@ -11,10 +11,10 @@ from oauth2client import file, client, tools
 
 def setup_googleslides_api():
     SCOPES = 'https://www.googleapis.com/auth/presentations'
-    store = file.Storage('/Users/Sarah/dev/googleslidesapi/credentials/credentials.json')
+    store = file.Storage('/Users/sarahpolzer/dev/googleslidesapi/credentials/credentials.json')
     creds = store.get()
     if not creds or creds.invalid:
-        flow = client.flow_from_('/Users/Sarah/dev/googleslidesapi/credentials/client_secret.json', SCOPES)
+        flow = client.flow_from_clientsecrets('/Users/sarahpolzer/dev/googleslidesapi/credentials/client_secret.json', SCOPES)
         creds = tools.run_flow(flow, store)
     slides_service = build('slides', 'v1', http=creds.authorize(Http()))
     return slides_service
@@ -24,10 +24,10 @@ def setup_googleslides_api():
 
 def setup_googledrive_api():
     SCOPES = 'https://www.googleapis.com/auth/drive.file'
-    store = file.Storage('/Users/Sarah/dev/googleslidesapi/credentials/credentials.json')
+    store = file.Storage('/Users/sarahpolzer/dev/googleslidesapi/credentials/credentials.json')
     creds = store.get()
     if not creds or creds.invalid:
-        flow = client.flow_from_clientsecrets('/Users/Sarah/dev/googleslidesapi/credentials/client_secret.json', SCOPES)
+        flow = client.flow_from_clientsecrets('/Users/sarahpolzer/dev/googleslidesapi/credentials/client_secret.json', SCOPES)
         creds = tools.run_flow(flow, store)
     drive_service = build('drive', 'v3', http=creds.authorize(Http()))
     return drive_service
