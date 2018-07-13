@@ -89,26 +89,25 @@ def master(reporting_month, ga_months_back):
     mo_list = get_months(reporting_month, ga_months_back)
     month_lead = pull_lead_data(mo_list)
     rearranged_dict = rearrange_data_for_flask(mo_list, month_lead)
-    print(rearranged_dict)
     return rearranged_dict
 
 
 
 rearranged_dict = master(reporting_month,ga_months_back)
 
-@app.route('/data_table_leads')
+@app.route('/leads_table')
 def data_for_template():
     data = rearranged_dict
     return render_template('data_table_leads.html', data=data)
 
-@app.route('/data_table_chart')
+@app.route('/leads_chart')
 def data_for_chart():
     data = rearranged_dict
-    return render_template('traffic_chart_2.html', data=data)
+    return render_template('leads_chart.html', data=data)
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5001)
+     app.run(port=5001)
 
 
 
