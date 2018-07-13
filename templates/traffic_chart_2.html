@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>My Stacked Bar Chart</title>
+    <title>My Stacked Bar Chart {{data['months'][1]}}</title>
   </head>
   <body>
     <canvas id="chart"></canvas>
@@ -11,28 +11,29 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="path/to/chartjs/dist/Chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
     <script>
     var ctx = document.getElementById('chart');
     var myChart = new Chart(ctx, {
         type: 'bar',
-        data: {labels: {% for label in data['months']%}
-                    "{{label}}"
-                    {%endfor%}]
-			    datasets: {
+        data: {
+          labels :['March', 'April', 'May'],
+    
+			    datasets:[
+             {
 				    label: 'Phone Call',
 				    backgroundColor: window.chartColors.red,
-				    data: {%for data_point in data['Phone Call']%} 
-                        "data_point" 
-                     {%endfor%}
-			        }
-				    {
+				    data: [1,2,3]
+			        },
+				     {
 				        label: 'Web Form',
 				        backgroundColor: window.chartColors.blue,
-				        data: {% for data_point in data['Web Form']%}"data_point"{%endfor%}
-			        }, 
-		        };
+				        data: [2,3,4]			       
+		          }
+            ]
+          },
          options: {
   				scales: {
     				xAxes: [{ stacked: true }],
