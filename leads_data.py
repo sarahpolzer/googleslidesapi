@@ -53,7 +53,6 @@ def pull_lead_data(list_of_months):
             json_data = json.loads(x.text)
             lead_dict[lead] = json_data[ "total_leads" ]
             month_lead[month] = lead_dict
-    print(month_lead)
     return month_lead
 
 def rearrange_data_for_flask(list_of_months, month_lead):
@@ -90,6 +89,7 @@ def master(reporting_month, ga_months_back):
     mo_list = get_months(reporting_month, ga_months_back)
     month_lead = pull_lead_data(mo_list)
     rearranged_dict = rearrange_data_for_flask(mo_list, month_lead)
+    print(rearranged_dict)
     return rearranged_dict
 
 
@@ -101,6 +101,10 @@ def data_for_template():
     data = rearranged_dict
     return render_template('data_table_leads.html', data=data)
 
+@app.route('/data_table_chart')
+def data_for_chart():
+    data = rearranged_dict
+    return render_template('traffic_chart_2.html', data=data)
 
 
 if __name__ == "__main__":
