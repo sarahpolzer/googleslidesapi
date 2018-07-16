@@ -11,6 +11,9 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
         <style>
+          .both-charts {
+
+          }
           .traffic-source {
             display: flex;
             align: center;
@@ -35,17 +38,15 @@
         .color-legend.Soci {
           background-color: blue ;
         }
-
-        .table {
-          max-width: 60%;
-          margin: 5%;
-        }
       </style>
 </head>
 
 
 <body>
-<table class="table table-striped">
+<div class="container-fluid">
+<div class="row both-charts">
+<div class="table-area col-md-6">
+<table class="table table-sm table-striped">
         <thead class="thead-dark">
           <tr>
             <th scope="col">Traffic Source</th>
@@ -71,7 +72,45 @@
           </tr>
         </tbody>
       </table>
+    </div>
+  <div class="chart-area col-md-6">
+      <canvas id="chart"></canvas>
+  </div>
+</div>
+</div>
+<script>
+var ctx = document.getElementById('chart');
+var myChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels:{{ data['months'] | safe }},
+    datasets: [{% for key in data %}{% if 'month' not in key %}
+      {
+        label: '{{ key }}',
+        data: {{ data[key] | safe }},
+        {% if 'Direct' in key %}
+        backgroundColor: '#000080'
+        {% elif 'Organic' in key %}
+        backgroundColor: '#ff0000'
+        {% elif 'Referral' in key %}
+        backgroundColor: '#ffff00'
+        {% elif 'Social' in key %}
+        backgroundColor: '#0000FF'
+        {% else %}
+        backgroundColor: '#808080'
+        {% endif %}
+      }{% if not loop.last %},{% endif %}{% endif %}{% endfor %}
+    ]
+  },
+  options: {
+    scales: {
+      xAxes: [{ stacked: true }],
+      yAxes: [{ stacked: true }]
+    }
+  }
+});
 
+</script>
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/"></script>
 </body>
