@@ -66,9 +66,6 @@ def rearrange_data_for_flask(list_of_months, month_lead):
                 phone_call.append(month_lead[month][lead_type])
             else:
                 web_form.append(month_lead[month][lead_type])
-    #for month in list_of_months:
-           # month = datetime.strptime(month, '%Y/%m')
-          # month = datetime.strftime(month, '%B')
     for i in range(len(list_of_months)):
         month = datetime.strptime(list_of_months[i], '%Y/%m')
         month = datetime.strftime(month, '%B')
