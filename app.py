@@ -174,16 +174,11 @@ data_dict = data_for_flask(reporting_month, ga_months_back, view_id)
 
 #This function/app route gets the data for flask and plugs it into a Bootstrap template
 
-@app.route('/traffic_table')
+@app.route('/traffic')
 def data_for_template():
     data = data_dict
-    return render_template('data_table_traffic.html', data=data)
-
-@app.route('/traffic_chart')
-def data_for_chart():
-    data = data_dict
-    return render_template('traffic_chart.html', data=data)
+    return render_template('traffic.html', data=data)
 
 
 if __name__ == "__main__":
-    app.run(port=5001)
+    app.run(port=5004)
