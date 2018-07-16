@@ -95,19 +95,14 @@ def master(reporting_month, ga_months_back):
 
 rearranged_dict = master(reporting_month,ga_months_back)
 
-@app.route('/leads_table')
+@app.route('/leads')
 def data_for_template():
     data = rearranged_dict
-    return render_template('data_table_leads.html', data=data)
-
-@app.route('/leads_chart')
-def data_for_chart():
-    data = rearranged_dict
-    return render_template('leads_chart.html', data=data)
+    return render_template('leads.html', data=data)
 
 
 if __name__ == "__main__":
-     app.run(port=5001)
+     app.run(port=5002)
 
 
 
