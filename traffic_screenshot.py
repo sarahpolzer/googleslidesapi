@@ -37,9 +37,10 @@ def take_ss(url):
     return image_url
 
 def get_file_id(image_url):
+    drive_service = get_slides_and_drive_apis.setup_googledrive_api()
     file_metadata = {'name': image_url}
     media = MediaFileUpload(image_url, mimetype='image/jpeg')
-    file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    file = drive_service.files.create(body=file_metadata, media_body=media, fields='id').execute()
 
 def master(url):
     image_url = take_ss(url)
