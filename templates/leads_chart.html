@@ -1,44 +1,43 @@
-<head>
-<title>My Stacked Bar Chart</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
-<script src="path/to/chartjs/dist/Chart.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
-<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
-</head>
-<script>
-<body>
-<canvas id="chart"></canvas>
 
-var ctx = document.getElementById('chart');
-var myChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels:{{ data['months'] | safe }},
-    datasets: [
-      {
-        label: 'Phone Call',
-        data: {{ data['Phone Call'] | safe }},
-        backgroundColor: '#0000FF',
-      },
-      {
-        label: 'Web Form',
-        data: {{ data['Web Form'] | safe }},
-        backgroundColor: '#ff0000',
-      },
-    ]
-  },
-  options: {
-    scales: {
-      xAxes: [{ stacked: true }],
-      yAxes: [{ stacked: true }]
-    }
-  }
-});
-</script>
-
-
-  </body>
+<html>
+  <head>
+    <title>My Stacked Bar Chart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="path/to/chartjs/dist/Chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  </head>
+    <body>
+      <canvas id="chart"></canvas>
+      <script>
+      var ctx = document.getElementById('chart');
+      var myChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels:{{ data['months'] | safe }},
+            datasets: [
+                      {
+                        label: 'Phone Call',
+                        data: {{ data['Phone Call'] | safe }},
+                        backgroundColor: '#0000FF',
+                       },
+                      {
+                        label: 'Web Form',
+                        data: {{ data['Web Form'] | safe }},
+                        backgroundColor: '#ff0000',
+                      },
+                    ]
+                  },
+          options: {
+              scales: {
+                xAxes: [{ stacked: true }],
+                yAxes: [{ stacked: true }]
+               }
+             }
+          });
+  </script> 
+</body>
 </html>
