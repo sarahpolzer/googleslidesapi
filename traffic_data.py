@@ -33,7 +33,7 @@ reporting_month = '2018/05'
 reporting_month = datetime.strptime(reporting_month, '%Y/%m')
 # ga_months_back = input('How many months back? ')
 #And as important to know how many months you're going back in the records
-ga_months_back = '6'
+ga_months_back = '5'
 
 #These lists will be used later on to hoard data of sorts
 list_of_months = []
@@ -206,11 +206,6 @@ def take_ss(url):
 def data_for_template():
     data = data_dict
     return render_template('traffic.html', data=data)
-
-@app.route('/traffic_image')
-def image_for_template():
-    data = 'traffic_screenshot.png'
-    return render_template('traffic_image.html', data=data)
 
 
 
