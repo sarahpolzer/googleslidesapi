@@ -15,6 +15,8 @@ shape_text = '{{traffic}}'
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
 drive_service =  get_slides_and_drive_apis.initialize_drive()
 folder_id = '1hScQyb1uMLQaBmNgyHa1dlFZAO2mKzxC'
+page_id = 'g1edf554207_0_7'
+
 
 def take_ss(url):
     chromedriver = "/usr/local/bin/chromedriver"
@@ -36,24 +38,19 @@ def take_ss(url):
     im.save(image_url)
     return image_url
 
-def get_file_id(image_url):
+def get_new_image_url(image_url):
     file_metadata = {'name': image_url,
     'parents': [folder_id]}
     media = MediaFileUpload(image_url, mimetype='image/jpeg', resumable = True)
     file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
     file_id = file.get('id')
-    new_image_url = 'https://drive.google.com/drive/folders/' + image_url
-    print(new_image_url)
+    new_image_url = 'https://drive.google.com/uc?id=' + file_id
     return new_image_url
-
-
-
 
 def master(url):
     image_url = take_ss(url)
     new_image_url = get_file_id(image_url)
     find_replace_img(pres_id, shape_text, new_image_url)
-
 
 
 master(url)
