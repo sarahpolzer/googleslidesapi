@@ -51,6 +51,12 @@ def get_new_image_url(file_id):
     return new_image_url
 
 
+
+def delete_png_file(image_url):
+    os.remove(image_url)
+
+
+
 def delete_google_drive_file(file_id):
     service = drive_service
     file_metadata = {'trashed':True}
@@ -66,6 +72,7 @@ def master(url):
     file_id = get_file_id(image_url)
     new_image_url = get_new_image_url(file_id)
     find_replace_img(pres_id, shape_text, new_image_url)
+    delete_png_file(image_url)
     delete_google_drive_file(file_id)
 
 master(url)
