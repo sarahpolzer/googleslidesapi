@@ -207,6 +207,11 @@ def data_for_template():
     data = data_dict
     return render_template('traffic.html', data=data)
 
+@app.route('/traffic_image')
+def image_for_template():
+    data = 'traffic_screenshot.png'
+    return render_template('traffic_image.html', data=data)
+
 
 
 if __name__ == "__main__":
