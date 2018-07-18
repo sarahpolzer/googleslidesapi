@@ -16,7 +16,7 @@ account_ids = {"321webmarketing.com": '29202'}
 account_id = account_ids["321webmarketing.com"]
 reporting_month = '2018/06'
 reporting_month = datetime.strptime(reporting_month, '%Y/%m')
-ga_months_back = '9'
+ga_months_back = '6'
 list_of_months = []
 
 def get_months(reporting_month,ga_months_back):
