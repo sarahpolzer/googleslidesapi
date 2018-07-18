@@ -10,12 +10,11 @@ from dateutil.relativedelta import relativedelta
 
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
 slides_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
-page_Id = 'g1edf554207_0_7'
-table_Id = '123456'
+page_Id = 'g1eca1050f0_0_62'
 
 def content_posted_report_month():
     now = datetime.datetime.now()
-    report_month = now.strftime('%B, %Y')
+    report_month = now.strftime('%B %Y')
     master_list = []
     table_dict = {}
     print("Answer these questions to provide information about content being posted in {}".format(report_month))
@@ -35,7 +34,7 @@ def content_posted_report_month():
 def content_posted_next_month():
     now = datetime.datetime.now()
     next_month = now + relativedelta(months=1)
-    next_month = next_month.strftime('%B, %Y')
+    next_month = next_month.strftime('%B %Y')
     master_list = []
     table_dict = {}
     print("Answer these questions to provide information about content being posted in {}".format(next_month))
@@ -239,7 +238,8 @@ def format_cell_text(table_dict, slides_Id, table_Id):
             response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
 
 
-def master(slides_id, page_Id, table_Id):
+def master_report_month(slides_id, page_Id):
+    table_Id = '12345'
     table_dict = content_posted_report_month()
     create_google_slides_data_table(table_dict, slides_id, page_Id, table_Id)
     edit_google_slides_col_data(table_dict, slides_id, table_Id)
@@ -249,4 +249,15 @@ def master(slides_id, page_Id, table_Id):
     format_cell_text(table_dict, slides_id, table_Id)
 
 
-master(slides_id, page_Id, table_Id)
+def master_next_month(slides_id, page_Id):
+    table_Id = '123456'
+    table_dict = content_posted_next_month()
+    create_google_slides_data_table(table_dict, slides_id, page_Id, table_Id)
+    edit_google_slides_col_data(table_dict, slides_id, table_Id)
+    edit_google_slides_data(table_dict, slides_id, table_Id)
+    format_header_row(table_dict, slides_id, table_Id)
+    format_header_text(table_dict, slides_id, table_Id)
+    format_cell_text(table_dict, slides_id, table_Id)
+
+master_report_month(slides_id, page_Id)
+master_next_month(slides_id, page_Id)
