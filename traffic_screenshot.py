@@ -13,8 +13,8 @@ url = 'http://127.0.0.1:' + str(port) + '/traffic'
 pres_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
 shape_text = '{{traffic}}'
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
-drive_service =  get_slides_and_drive_apis.setup_googledrive_api()
-
+drive_service =  get_slides_and_drive_apis.initialize_drive()
+folder_id = '1hScQyb1uMLQaBmNgyHa1dlFZAO2mKzxC'
 
 def take_ss(url):
     chromedriver = "/usr/local/bin/chromedriver"
@@ -37,15 +37,22 @@ def take_ss(url):
     return image_url
 
 def get_file_id(image_url):
-    drive_service = get_slides_and_drive_apis.setup_googledrive_api()
-    file_metadata = {'name': image_url}
-    media = MediaFileUpload(image_url, mimetype='image/jpeg')
-    file = drive_service.files.create(body=file_metadata, media_body=media, fields='id').execute()
+    file_metadata = {'name': image_url,
+    'parents': [folder_id]}
+    media = MediaFileUpload(image_url, mimetype='image/jpeg', resumable = True)
+    file = drive_service.files().create(body=file_metadata, media_body=media, fields='id').execute()
+    file_id = file.get('id')
+    new_image_url = 'https://drive.google.com/drive/folders/' + image_url
+    print(new_image_url)
+    return new_image_url
+
+
+
 
 def master(url):
     image_url = take_ss(url)
-    get_file_id(image_url)
-
+    new_image_url = get_file_id(image_url)
+    find_replace_img(pres_id, shape_text, new_image_url)
 
 
 
