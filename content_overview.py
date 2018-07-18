@@ -63,9 +63,10 @@ def create_google_slides_data_table(table_dict, slides_id, page_Id, table_Id):
                 "pageObjectId": page_Id,
             },
             "rows": num_rows,
-             "columns": num_cols
-            }
+            "columns": num_cols
         }
+        }     
+        
     ]
     }
     response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
@@ -237,6 +238,9 @@ def format_cell_text(table_dict, slides_Id, table_Id):
                 }
             response = service.presentations().batchUpdate(presentationId = slides_id, body = body).execute()
 
+    
+    
+
 
 def master_report_month(slides_id, page_Id):
     table_Id = '12345'
@@ -247,8 +251,6 @@ def master_report_month(slides_id, page_Id):
     format_header_row(table_dict, slides_id, table_Id)
     format_header_text(table_dict, slides_id, table_Id)
     format_cell_text(table_dict, slides_id, table_Id)
-
-
 def master_next_month(slides_id, page_Id):
     table_Id = '123456'
     table_dict = content_posted_next_month()
