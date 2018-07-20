@@ -8,10 +8,11 @@ import googleslidesproject
 from googleslidesproject import find_replace_img
 from apiclient.http import MediaFileUpload
 
-port = 5002
-url = 'http://127.0.0.1:' + str(port) + '/leads'
-pres_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
+port = 5004
+url = '/leads'
+url = 'http://127.0.0.1:' + str(port) + url
 shape_text = '{{leads}}'
+pres_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
 drive_service =  get_slides_and_drive_apis.initialize_drive()
 folder_id = '1hScQyb1uMLQaBmNgyHa1dlFZAO2mKzxC'
@@ -61,9 +62,6 @@ def delete_google_drive_file(file_id):
     service = drive_service
     file_metadata = {'trashed':True}
     file = drive_service.files().update(body=file_metadata, fileId = file_id).execute()
-
-
-
 
 
 
