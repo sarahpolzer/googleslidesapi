@@ -171,36 +171,15 @@ def rearrange_dict_for_flask(data):
                 data_dict[channel] = lst[::-1]
     return data_dict
 #This kinda just does what I said above
-def data_for_flask(reporting_month, ga_months_back, view_id):
+def traffic_data_for_flask(reporting_month, ga_months_back, view_id):
     data = get_data(reporting_month, ga_months_back, view_id)
     data_dict = rearrange_dict_for_flask(data)
     return data_dict
 
-data_dict = data_for_flask(reporting_month, ga_months_back, view_id)
+data_dict = traffic_data_for_flask(reporting_month, ga_months_back, view_id)
 
 #This function/app route gets the data for flask and plugs it into a Bootstrap template
 
-def take_ss(url):
-    chromedriver = "/usr/local/bin/chromedriver"
-    os.environ["webdriver.chrome.driver"] = chromedriver
-    driver = webdriver.Chrome(chromedriver)
-
-
-    image_url = 'traffic_screenshot.png'
-    driver.get(url)
-    element = driver.find_element_by_id('body')
-    location = element.location
-    size = element.size
-    png = driver.get_screenshot_as_png()
-    driver.quit()
-    im = Image.open(BytesIO(png))
-    left = location['x']
-    top= location['y']
-    right = location['x'] + size['width']
-    bottom = location['y'] + size['height']
-    im= im.crop((left, top, right, bottom))
-
-    return im.save(image_url)
 
 @app.route('/traffic')
 def data_for_template():
@@ -211,7 +190,6 @@ def data_for_template():
 
 if __name__ == "__main__":
     app.run(port=port)
-    take_ss(url)
 
 
 
