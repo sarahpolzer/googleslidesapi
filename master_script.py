@@ -151,8 +151,8 @@ def get_data(reporting_month, ga_months_back, view_id):
 #Unfortunately, I need this data to work on flask, and didn't feel like going back and changing everything
 #so this function rearranges the dictionary so it can be looped through on the html (bootstrap) template
 
-def rearrange_dict_for_flask(data):
-    data_dict = {}
+def rearrange_traffic_data_for_flask(data):
+    traffic_data = {}
     months = data["months"]
     channels = data["channels"]
     data = data["data"]
@@ -171,21 +171,21 @@ def rearrange_dict_for_flask(data):
         month = datetime.strptime(months[i], '%Y/%m')
         month = datetime.strftime(month, '%b')
         months[i] = month     
-    data_dict["months"] = months[::-1]
+    traffic_data["months"] = months[::-1]
     for channel in channels:
         lst = []
         for item in channel_list:
             if channel in item:
                 item = item.replace(channel, "").replace(":", "")
                 lst.append(item)
-                data_dict[channel] = lst[::-1]
-    return data_dict
+                traffic_data[channel] = lst[::-1]
+    return traffic_data
 
 #This kinda just does what I said above
 def traffic_data_for_flask(reporting_month, ga_months_back, view_id):
     data = get_data(reporting_month, ga_months_back, view_id)
-    data_dict = rearrange_dict_for_flask(data)
-    return data_dict
+    traffic_data = rearrange_traffic_data_for_flask(data)
+    return traffic_data
 
 """ API 
 Calls
@@ -224,8 +224,8 @@ def pull_lead_data(list_of_months):
             month_lead[month] = lead_dict
     return month_lead
 
-def rearrange_data_for_flask(list_of_months, month_lead):
-    rearranged_dict = {}
+def rearrange_lead_data_for_flask(list_of_months, month_lead):
+    lead_data = {}
     lead_types = ['phone_call', 'web_form']
     phone_call = []
     web_form = []
@@ -242,10 +242,10 @@ def rearrange_data_for_flask(list_of_months, month_lead):
     list_of_months = list_of_months[::-1]
     phone_call = phone_call[::-1]
     web_form = web_form[::-1]
-    rearranged_dict['months'] = list_of_months
-    rearranged_dict['Phone Call'] = phone_call
-    rearranged_dict['Web Form'] = web_form
-    return rearranged_dict            
+    lead_data['months'] = list_of_months
+    lead_data['Phone Call'] = phone_call
+    lead_data['Web Form'] = web_form
+    return lead_data           
                      
             
        
@@ -254,8 +254,8 @@ def rearrange_data_for_flask(list_of_months, month_lead):
 def leads_data_for_flask(reporting_month, ga_months_back):
     mo_list = get_months(reporting_month, ga_months_back)
     month_lead = pull_lead_data(mo_list)
-    rearranged_dict = rearrange_data_for_flask(mo_list, month_lead)
-    return rearranged_dict
+    lead_data = rearrange_lead_data_for_flask(mo_list, month_lead)
+    return lead_data
 
 
 """End 
