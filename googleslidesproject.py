@@ -125,4 +125,4 @@ find_replace_str(pres_id, '{{org}}', org)
 
 
 #slide 7 search replace
-find_replace_str(pres_id, '{{mo_before_last}}', mo_before_last)
+find_replace_str(pres_id, '{{mo_before_last}}', mo_before_last)  
