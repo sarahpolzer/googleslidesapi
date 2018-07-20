@@ -28,12 +28,12 @@ view_id = view_ids['{}'.format(org_name)]
 
 # reporting_month = input('What is the month of report? YYYY/MM ')
  #reporting_month = datetime.strptime(reporting_month, '%Y/%m')
-reporting_month = '2018/05'
+reporting_month = '2018/03'
 #Converting reporting month into YYYY/MM format
 reporting_month = datetime.strptime(reporting_month, '%Y/%m')
 # ga_months_back = input('How many months back? ')
 #And as important to know how many months you're going back in the records
-ga_months_back = '5'
+ga_months_back = '6'
 
 #These lists will be used later on to hoard data of sorts
 list_of_months = []
