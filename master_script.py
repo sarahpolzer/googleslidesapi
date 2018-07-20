@@ -31,12 +31,9 @@ api_key = "273-f91b45f83365ec4b"
 token = "26f9d7d7d282599f161076ad2e4eecfd"
 
 #Account IDs
-account_ids = {"321webmarketing.com": '29202'}
-account_id = account_ids["321webmarketing.com"]
+account_ids = {"www.321webmarketing.com": '29202'}
+account_id = account_ids[org_name]
 
-#These lists will be used later on to hoard data of sorts
-list_of_months = []
-unique_channel_groups =[]
 
 #First we've got a function to get the months that we will pull API data from
 
@@ -258,22 +255,28 @@ def leads_data_for_flask(reporting_month, ga_months_back):
     return lead_data
 
 
-"""End 
+"""
+End 
 of
 API
 call
 to
-WhatConverts"""
+WhatConverts
+"""
 
 
-""" Beginning to make Content Charts"""
+""" 
+Beginning 
+to make
+ Content Charts
+ """
 
-"""Collecting data for content posted during reporting month"""
+#Collecting data for content posted during reporting month
 def content_posted_report_month():
     now = datetime.now()
     report_month = now.strftime('%B %Y')
     master_list = []
-    report_month_table_dict = {}
+    report_month_data = {}
     print("Answer these questions to provide information about content being posted in {}".format(report_month))
     for article in range(3):
         article_list = []
@@ -282,16 +285,17 @@ def content_posted_report_month():
         article_list.append(title)
         article_list.append(content_type)
         master_list.append(article_list)
-    report_month_table_dict['columns'] = ['Title', 'Type']
-    report_month_table_dict['data'] = master_list
-    return report_month_table_dict
-"""Collecting data for content that is going to be posted next month"""
+    report_month_data['columns'] = ['Title', 'Type']
+    report_month_data['data'] = master_list
+    return report_month_data
+
+#Collecting data for content that is going to be posted next month
 def content_posted_next_month():
     now = datetime.now()
     next_month = now + relativedelta(months=1)
     next_month = next_month.strftime('%B %Y')
     master_list = []
-    next_month_table_dict = {}
+    next_month_data = {}
     print("Answer these questions to provide information about content being posted in {}".format(next_month))
     for article in range(3):
         article_list = []
@@ -300,14 +304,15 @@ def content_posted_next_month():
         article_list.append(title)
         article_list.append(content_type)
         master_list.append(article_list)
-    next_month_table_dict['columns'] = ['Title', 'Type']
-    next_month_table_dict['data'] = master_list
-    return next_month_table_dict
+    next_month_data['columns'] = ['Title', 'Type']
+    next_month_data['data'] = master_list
+    return next_month_data
 
 
 
 
-"""consolidating
+"""
+consolidating
 data
 """
 
@@ -317,7 +322,10 @@ report_month_data = content_posted_report_month()
 next_month_data = content_posted_next_month()
 
 """
-Now rendering Flask templates for data"""
+Now rendering 
+Flask templates
+for data
+"""
 
 
 @app.route('/traffic')
