@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<style>
+table {
+    font-family: arial;
+    font-size: 10;
+    border-collapse: collapse;
+    width: 100%;
+    height: 100%
+}
+
+ th {
+    border: 1px solid #dddddd;
+    text-align: left;
+    font-weight: bold; 
+    padding: 16px;
+    background-color : gainsboro 
+}
+td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 16px;
+    background-color : white
+}
+    
+
+</style>
+</head>
+<body>
+
+<table>
+    {% for key in data.keys() %}
+    {% if key=='columns' %}  
+  <tr>
+    {% for value in data[key]%}
+    <th>{{value}}</th>
+    {% endfor %}
+  </tr>
+  {% endif %}
+  {% endfor %}
+
+  {% for key in data.keys() %}
+  {% if key=='data' %}
+  {% for value in data[key] %}
+  <tr>
+   {% for v in value %}  
+    <td>{{v}}</td>
+   {% endfor %}   
+  </tr>
+  {% endfor %}
+  {% endif %}
+  {% endfor %}
+</table>
+
+</body>
+</html>
