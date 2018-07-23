@@ -7,7 +7,35 @@ import requests
 import json 
 
 rm = requests.get('https://my.321webmarketing.com/api/organizations')
-json_data = json.loads(rm.text)
-print(json_data['dba_name'])
-with open('client_list.json', 'w') as outfile:
-    json.dump(json_data, outfile)
+organization_data = json.loads(rm.text)
+#with open('organization_list.json', 'w') as outfile:
+  #  json.dump(organization_data, outfile)
+
+
+Rm = requests.get('https://my.321webmarketing.com/api/what-converts')
+what_converts_data = json.loads(Rm.text)
+#with open('what_converts_list.json', 'w') as outfile:
+   # json.dump(what_converts_data, outfile)
+
+
+clients = {}
+
+
+for item in organization_data:
+    client_information = {}
+    client = item['dba_name']
+    client_information['domain_name'] = item['dba_name']
+    client_information['org_logo'] = item['remote_logo_url']
+    for what_converts in what_converts_data:
+        if str(item['id']) in what_converts['organization']:
+            client_information['what_converts'] = what_converts['account_id']
+    clients[client] = client_information
+
+
+
+
+
+
+    
+with open('client_information.json', 'w') as outfile:
+    json.dump(clients, outfile)
