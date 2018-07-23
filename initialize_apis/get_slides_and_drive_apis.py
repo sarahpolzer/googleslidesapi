@@ -45,3 +45,4 @@ def initialize_drive():
 
 
 initialize_drive()
+setup_googledrive_api()
