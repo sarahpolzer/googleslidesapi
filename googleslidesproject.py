@@ -18,6 +18,12 @@ from initialize_apis import get_slides_and_drive_apis
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
 drive_service =  get_slides_and_drive_apis.setup_googledrive_api()
 drive_service_two = get_slides_and_drive_apis.initialize_drive()
+
+
+ pres_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
+ org = 'BBG'
+ org_website = 'www.bbgbroker.com'
+ org_logo = 'https://s16001.pcdn.co/wp-content/themes/kristie/images/updated-bbg-logo.png'
 # getting the current time, which will be useful later when forming titles for slides
 #folder_id = '1hScQyb1uMLQaBmNgyHa1dlFZAO2mKzxC'
 #with open('client_information/client_information.json', 'r') as f:
