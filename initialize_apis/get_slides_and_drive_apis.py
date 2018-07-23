@@ -34,13 +34,14 @@ def setup_googledrive_api():
         creds = tools.run_flow(flow, store)
     drive_service = build('drive', 'v3', http=creds.authorize(Http()))
     return drive_service
-   
 
-
-    
 
 def initialize_drive():
   credentials = ServiceAccountCredentials.from_json_keyfile_name(
   '/Users/sarahpolzer/dev/googleslidesapi/credentials/service_account_creds.json', 'https://www.googleapis.com/auth/drive.file')
   drive_service = build('drive', 'v3', credentials=credentials)
   return drive_service
+
+
+
+initialize_drive()
