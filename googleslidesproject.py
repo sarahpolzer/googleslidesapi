@@ -12,11 +12,21 @@ import datetime
 from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
 import initialize_apis
+import json
 from initialize_apis import get_slides_and_drive_apis
 #from get_slides_and_drive_apis import setup_googleslides_api, setup_googledrive_api
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
-drive_service =  get_slides_and_drive_apis.initialize_drive()
+drive_service =  get_slides_and_drive_apis.setup_googledrive_api()
+drive_service_two = get_slides_and_drive_apis.initialize_drive()
 # getting the current time, which will be useful later when forming titles for slides
+#folder_id = '1hScQyb1uMLQaBmNgyHa1dlFZAO2mKzxC'
+#with open('client_information/client_information.json', 'r') as f:
+  #  clients = json.load(f)
+#client = input('Who is the client? ')
+#org_website = clients[client]['domain_name'].replace("https://", "").replace("http://", "").replace("/", "")
+#org_logo = clients[client]['org_logo']
+#pres_id = clients[client]['presentation_id']
+#org = client
 
 #A function to create a slides presentation with a given title, returning its presentation id
 def create_presentation(title):
@@ -26,13 +36,15 @@ def create_presentation(title):
     }
     presentation = service.presentations().create(body=body).execute()
     presentation_id = presentation.get('presentationId')
-    print(presentation_id)
     return presentation_id
+
+
+
 
 #A function to duplicate a presentation based off of a presentation id, returning the
 #presentation id of the copy
 def duplicate_presentation(name, presentation_id):
-    service = drive_service
+    service = drive_service_two
     body = {
         'name': name
     }
@@ -90,10 +102,7 @@ now = datetime.datetime.now()
 month_current = now
 month_previous = now - relativedelta(months=1)
 month_next = now + relativedelta(months=1)
-pres_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
-org = 'BBG'
-org_website = 'www.bbgbroker.com'
-org_logo = 'https://s16001.pcdn.co/wp-content/themes/kristie/images/updated-bbg-logo.png'
+
 
 
 mo_3l = month_current.strftime('%B')
@@ -127,3 +136,7 @@ find_replace_str(pres_id, '{{org}}', org)
 #slide 7 search replace
 find_replace_str(pres_id, '{{mo_before_last}}', mo_before_last)  
 
+
+
+
+duplicate_presentation('Anthony', '1ph9WraP3rSEQbjmMKsnEA3qcaDep7uROjiGqi6rkKxM')
