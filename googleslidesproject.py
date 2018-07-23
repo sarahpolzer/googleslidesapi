@@ -15,7 +15,7 @@ import initialize_apis
 from initialize_apis import get_slides_and_drive_apis
 #from get_slides_and_drive_apis import setup_googleslides_api, setup_googledrive_api
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
-drive_service =  get_slides_and_drive_apis.setup_googledrive_api()
+drive_service =  get_slides_and_drive_apis.initialize_drive()
 # getting the current time, which will be useful later when forming titles for slides
 
 #A function to create a slides presentation with a given title, returning its presentation id
@@ -26,19 +26,19 @@ def create_presentation(title):
     }
     presentation = service.presentations().create(body=body).execute()
     presentation_id = presentation.get('presentationId')
+    print(presentation_id)
     return presentation_id
 
 #A function to duplicate a presentation based off of a presentation id, returning the
 #presentation id of the copy
-def duplicate_presentation(presentation_id):
+def duplicate_presentation(name, presentation_id):
     service = drive_service
     body = {
-        'name': 'copy'
+        'name': name
     }
     drive_response = service.files().copy(
-        fileId = str(presentation_id), body=body).execute()
+        fileId = presentation_id, body=body).execute()
     presentation_copy_id = drive_response.get('id')
-    print(presentation_copy_id)
     return presentation_copy_id
     
 
@@ -126,3 +126,4 @@ find_replace_str(pres_id, '{{org}}', org)
 
 #slide 7 search replace
 find_replace_str(pres_id, '{{mo_before_last}}', mo_before_last)  
+
