@@ -90,7 +90,8 @@ def delete_google_drive_file(file_id):
     file_metadata = {'trashed':True}
     file = drive_service.files().update(body=file_metadata, fileId = file_id).execute()
 
-
+#This function takes the ahrefs screenshots and then crops the images. I would recommend running it sparingly
+#as it is frowned upon to crawl ahrefs.
 def take_screenshots_and_crop_images(domains_image, keywords_image):
      take_ahrefs_screenshots()
      crop_domains_image(domains_image)
@@ -98,7 +99,6 @@ def take_screenshots_and_crop_images(domains_image, keywords_image):
 
 #The master function where the images  will be inserted into the reports
 def master(images):
-   
     for image in images:
         file_id = get_file_id(image)
         new_image_url = get_new_image_url(file_id)
