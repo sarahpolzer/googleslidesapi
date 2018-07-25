@@ -4,8 +4,8 @@ import os
 from selenium import webdriver
 from PIL import Image
 from io import BytesIO
-import googleslidesproject
-from googleslidesproject import find_replace_img
+import google_slides_functions
+from google_slides_functions import find_replace_img
 from apiclient.http import MediaFileUpload
 
 port = 5004
