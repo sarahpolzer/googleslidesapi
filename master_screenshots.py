@@ -4,18 +4,21 @@ import os
 from selenium import webdriver
 from PIL import Image
 from io import BytesIO
-import googleslidesproject
-from googleslidesproject import find_replace_img
+import google_slides_functions
+from google_slides_functions import find_replace_img
 from apiclient.http import MediaFileUpload
-
+import json 
 port = 5004
 url_list = ['/traffic', '/leads', '/content_report_month', '/content_next_month']
-pres_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
+#pres_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
 drive_service =  get_slides_and_drive_apis.initialize_drive()
 folder_id = '1hScQyb1uMLQaBmNgyHa1dlFZAO2mKzxC'
 page_id = 'g202ad04c01_0_6'
-
+with open('client_information/client_information.json', 'r') as f:
+     clients = json.load(f)
+client = input('Who is the client? ')
+pres_id = clients[client]['presentation_id']
 
 def take_ss(url):
     chromedriver = "/usr/local/bin/chromedriver"
