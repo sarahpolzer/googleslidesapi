@@ -8,8 +8,8 @@ from selenium.webdriver.common.by import By
 from PIL import Image
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
 drive_service =  get_slides_and_drive_apis.initialize_drive()
-import googleslidesproject
-from googleslidesproject import find_replace_img
+import google_slides_functions
+from google_slides_functions import find_replace_img
 from apiclient.http import MediaFileUpload
 import json 
 #don't forget to add your environmental variables
@@ -20,10 +20,10 @@ with open('client_information/client_information.json', 'r') as f:
      clients = json.load(f)
 client = input('Who is the client? ')
 domain_name = clients[client]['domain_name'].replace("https://", "").replace("http://", "").replace("/", "")
-#pres_id = clients[client]['presentation_id']
+pres_id = clients[client]['presentation_id']
 folder_id = '1hScQyb1uMLQaBmNgyHa1dlFZAO2mKzxC'
 page_id = 'g202ad04c01_0_6'
-pres_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
+
 
 domains_image = 'domains_count.png'
 keywords_image = 'keyword_count.png'
@@ -118,7 +118,9 @@ def find_and_replace_ahrefs_images_into_reports(images):
 
 
 
-
+#The master function where everything comes together. The screenshots are taken, the images are 
+#cropped, the images are put into google drive, then found and replaced in the reports, then the
+#image files are deleted, and then the google drive files are deleted.
 def master():
     images = take_screenshots_and_crop_images()
     find_and_replace_ahrefs_images_into_reports(images)
