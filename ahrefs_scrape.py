@@ -19,7 +19,7 @@ ahrefs_un = os.environ['AHREFS_UN']
 with open('client_information/client_information.json', 'r') as f:
      clients = json.load(f)
 client = input('Who is the client? ')
-domain_name = clients[client]['domain_name'].replace("https://", "").replace("http://", "").replace("/", "")
+domain_name = clients[client]['domain_name'].replace("https://", "").replace("http://", "").replace('www/', 'www.')
 pres_id = clients[client]['presentation_id']
 folder_id = '1hScQyb1uMLQaBmNgyHa1dlFZAO2mKzxC'
 page_id = 'g202ad04c01_0_6'
@@ -110,9 +110,9 @@ def find_and_replace_ahrefs_images_into_reports(images):
         file_id = get_file_id(image)
         new_image_url = get_new_image_url(file_id)
         if 'domains' in image:
-            find_replace_img(pres_id, '{{domains}}', new_image_url)
+            find_replace_img(pres_id, '{{domains_chart}}', new_image_url)
         else:
-            find_replace_img(pres_id, '{{keywords}}', new_image_url)
+            find_replace_img(pres_id, '{{keywords_chart}}', new_image_url)
         delete_png_file(image)
         delete_google_drive_file(file_id)
 
