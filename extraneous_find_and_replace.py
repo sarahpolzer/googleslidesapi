@@ -8,7 +8,7 @@ from dateutil.relativedelta import relativedelta
 import initialize_apis
 import json
 from initialize_apis import get_slides_and_drive_apis
-from googleslidesproject import *
+from google_slides_functions import *
 
 #pres_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
 #org = 'BBG'
@@ -60,3 +60,4 @@ find_replace_str(pres_id, '{{org}}', org)
 
 #slide 7 search replace
 find_replace_str(pres_id, '{{mo_before_last}}', mo_before_last)  
+
