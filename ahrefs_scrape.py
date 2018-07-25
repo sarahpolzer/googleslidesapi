@@ -11,14 +11,18 @@ drive_service =  get_slides_and_drive_apis.initialize_drive()
 import googleslidesproject
 from googleslidesproject import find_replace_img
 from apiclient.http import MediaFileUpload
-
+import json 
 #don't forget to add your environmental variables
 ahrefs_pw = os.environ['AHREFS_PW']
 ahrefs_un = os.environ['AHREFS_UN']
-domain_name = 'kppblaw.com'
+#domain_name = 'kppblaw.com'
+with open('client_information/client_information.json', 'r') as f:
+     clients = json.load(f)
+client = input('Who is the client? ')
+domain_name = clients[client]['domain_name'].replace("https://", "").replace("http://", "").replace("/", "")
+#pres_id = clients[client]['presentation_id']
 folder_id = '1hScQyb1uMLQaBmNgyHa1dlFZAO2mKzxC'
 page_id = 'g202ad04c01_0_6'
-pres_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
 pres_id = '17qSfATi1I-0HmQ7LoEgCrz-DkOdw7qt1p4ATg9oika8'
 
 domains_image = 'domains_count.png'
@@ -81,7 +85,9 @@ def get_new_image_url(file_id):
     new_image_url = 'https://drive.google.com/uc?id=' + file_id
     return new_image_url
 
-
+#a function to delete the image files
+def delete_png_file(image_url):
+    os.remove(image_url)
 
 
 #A function to delete the google drive file that is created by the get_file_id function
@@ -92,13 +98,14 @@ def delete_google_drive_file(file_id):
 
 #This function takes the ahrefs screenshots and then crops the images. I would recommend running it sparingly
 #as it is frowned upon to crawl ahrefs.
-def take_screenshots_and_crop_images(domains_image, keywords_image):
+def take_screenshots_and_crop_images():
      take_ahrefs_screenshots()
      crop_domains_image(domains_image)
      crop_keywords_image(keywords_image)
-
+     images = [domains_image, keywords_image]
+     return images
 #The master function where the images  will be inserted into the reports
-def master(images):
+def find_and_replace_ahrefs_images_into_reports(images):
     for image in images:
         file_id = get_file_id(image)
         new_image_url = get_new_image_url(file_id)
@@ -106,6 +113,15 @@ def master(images):
             find_replace_img(pres_id, '{{domains}}', new_image_url)
         else:
             find_replace_img(pres_id, '{{keywords}}', new_image_url)
+        delete_png_file(image)
         delete_google_drive_file(file_id)
 
-master(images)
+
+
+
+def master():
+    images = take_screenshots_and_crop_images()
+    find_and_replace_ahrefs_images_into_reports(images)
+
+
+master()
