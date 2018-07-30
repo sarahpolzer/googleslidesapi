@@ -5,17 +5,20 @@ shapes to images using the Google Slides API
 
 """
 
-#from quickstart import *
-#import time packages
+#Importing file initialize_apis
 import initialize_apis
+
+#importing the file get_slides_and_drive_apis from the file initialize_apis
 from initialize_apis import get_slides_and_drive_apis
-#from get_slides_and_drive_apis import setup_googleslides_api, setup_googledrive_api
+
+#assigning variable names to slides/drive service
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
 drive_service =  get_slides_and_drive_apis.setup_googledrive_api()
-drive_service_two = get_slides_and_drive_apis.initialize_drive()
 
 
 
+
+#A function to create a Google Slides presentation, returning its presentation ID
 def create_presentation(title):
     service = slides_service
     body = { 

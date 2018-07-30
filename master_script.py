@@ -1,3 +1,4 @@
+#importing required packages"
 from flask import Flask
 app = Flask(__name__)
 from flask import Markup
@@ -10,24 +11,24 @@ from dateutil.relativedelta import relativedelta
 from dateutil.parser import parse
 from initialize_apis import get_google_analytics_api
 import requests
+
+#The port where the server will run
 port = 5004
 
-
+#reading JSON client data as to get the stored google analytics data
 with open('client_information/client_information.json', 'r') as f:
      clients = json.load(f)
+#asking the User who the client is
 client = input('Who is the client? ')
 view_id = clients[client]['google_analytics']
 
+#Asking the User what the reporting month will be 
 reporting_month = input('What is the reporting month? (YYYY/MM)? ')
 reporting_month = datetime.strptime(reporting_month, '%Y/%m')
+
+#Asking the User how many months of data they want, essentially
 ga_months_back = input('How many months back? ')
-#At the beginning you should define the organization name (domain name) to get the View ID so 
-#the API call can be made to Google Analytics.
-#view_ids = {}
-#view_ids['www.321webmarketing.com'] = '89636352'
-#org_name = input('What is the domain name? ')
-#org_name = 'www.321webmarketing.com'
-#view_id = view_ids['{}'.format(org_name)]
+
 
 """What
 Converts
@@ -36,7 +37,7 @@ Data"""
 api_key = "273-f91b45f83365ec4b"
 token = "26f9d7d7d282599f161076ad2e4eecfd"
 
-#Account IDs
+#Account IDs based off of client dictionary
 account_id = clients[client]['what_converts']
 
 
@@ -58,7 +59,6 @@ To
 Google
 Analytics"""
 
-#A function to get a list of all of the months we will be examining for channel groupings
 
 #A function to return a dictionary of new users, per month, by channel grouping
 def get_new_users(month):
@@ -226,7 +226,7 @@ def pull_lead_data(list_of_months):
             lead_dict[lead] = json_data[ "total_leads" ]
             month_lead[month] = lead_dict
     return month_lead
-
+#This function rearranges the data we just got so that it is suitable for the Flask template
 def rearrange_lead_data_for_flask(list_of_months, month_lead):
     lead_data = {}
     lead_types = ['phone_call', 'web_form']
@@ -253,7 +253,8 @@ def rearrange_lead_data_for_flask(list_of_months, month_lead):
             
        
         
-
+#This is kindof like the master function, it returns the dictionary of leads data that will
+#later be used in the Flask template.
 def leads_data_for_flask(reporting_month, ga_months_back):
     mo_list = get_months(reporting_month, ga_months_back)
     month_lead = pull_lead_data(mo_list)
@@ -333,24 +334,24 @@ Flask templates
 for data
 """
 
-
+#The app route for Google Analytics data
 @app.route('/traffic')
 def traffic_data_for_template():
     data = traffic_data
     return render_template('traffic.html', data=data)
 
-
+#The app route for WhatConverts data
 @app.route('/leads')
 def leads_data_for_template():
     data = leads_data
     return render_template('leads.html', data=data)
 
-
+#The app route for the content chart for the reporting month
 @app.route('/content_report_month')
 def content_data_for_report_month_template():
     data = report_month_data
     return render_template('content_overview.html', data=data)
-
+#The app route for the content chart for the following month
 @app.route('/content_next_month')
 def content_data_for_next_month_template():
     data = next_month_data
