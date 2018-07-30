@@ -16,18 +16,18 @@ port = 5004
 with open('client_information/client_information.json', 'r') as f:
      clients = json.load(f)
 client = input('Who is the client? ')
-#view_id = clients[client]['view_id']
+view_id = clients[client]['google_analytics']
 
 reporting_month = input('What is the reporting month? (YYYY/MM)? ')
 reporting_month = datetime.strptime(reporting_month, '%Y/%m')
 ga_months_back = input('How many months back? ')
 #At the beginning you should define the organization name (domain name) to get the View ID so 
 #the API call can be made to Google Analytics.
-view_ids = {}
-view_ids['www.321webmarketing.com'] = '89636352'
-org_name = input('What is the domain name? ')
-org_name = 'www.321webmarketing.com'
-view_id = view_ids['{}'.format(org_name)]
+#view_ids = {}
+#view_ids['www.321webmarketing.com'] = '89636352'
+#org_name = input('What is the domain name? ')
+#org_name = 'www.321webmarketing.com'
+#view_id = view_ids['{}'.format(org_name)]
 
 """What
 Converts
