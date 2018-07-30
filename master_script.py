@@ -12,6 +12,12 @@ from initialize_apis import get_google_analytics_api
 import requests
 port = 5004
 
+
+with open('client_information/client_information.json', 'r') as f:
+     clients = json.load(f)
+client = input('Who is the client? ')
+#view_id = clients[client]['view_id']
+
 reporting_month = input('What is the reporting month? (YYYY/MM)? ')
 reporting_month = datetime.strptime(reporting_month, '%Y/%m')
 ga_months_back = input('How many months back? ')
@@ -20,7 +26,7 @@ ga_months_back = input('How many months back? ')
 view_ids = {}
 view_ids['www.321webmarketing.com'] = '89636352'
 org_name = input('What is the domain name? ')
-#org_name = 'www.321webmarketing.com'
+org_name = 'www.321webmarketing.com'
 view_id = view_ids['{}'.format(org_name)]
 
 """What
@@ -31,8 +37,7 @@ api_key = "273-f91b45f83365ec4b"
 token = "26f9d7d7d282599f161076ad2e4eecfd"
 
 #Account IDs
-account_ids = {"www.321webmarketing.com": '29202'}
-account_id = account_ids[org_name]
+account_id = clients[client]['what_converts']
 
 
 #First we've got a function to get the months that we will pull API data from
