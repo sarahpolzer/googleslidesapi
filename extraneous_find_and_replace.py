@@ -19,7 +19,7 @@ from google_slides_functions import *
 with open('client_information/client_information.json', 'r') as f:
      clients = json.load(f)
 client = input('Who is the client? ')
-org_website = clients[client]['domain_name'].replace("https://", "").replace("http://", "").replace('www/', 'www.')
+org_website = clients[client]['domain_name'].replace("https://", "").replace("http://", "").replace('www/', 'www.').replace('/', "")
 org_logo = clients[client]['org_logo']
 pres_id = clients[client]['presentation_id']
 org = client
