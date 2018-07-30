@@ -214,7 +214,8 @@ def pull_lead_data(list_of_months):
                 'lead_type': lead,
                 'start_date': startdate,
                 'end_date': enddate,
-                'lead_status': 'unique'
+                'lead_status': 'unique',
+                'account_id' : account_id
              }
             x = requests.get(
                 'https://app.whatconverts.com/api/v1/leads',
