@@ -9,7 +9,7 @@ from PIL import Image
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
 drive_service =  get_slides_and_drive_apis.initialize_drive()
 import google_slides_functions
-from google_slides_functions import find_replace_img
+from google_slides_functions import find_replace_str, find_replace_img
 from apiclient.http import MediaFileUpload
 import json 
 #don't forget to add your environmental variables
@@ -23,8 +23,8 @@ domain_name = clients[client]['domain_name'].replace("https://", "").replace("ht
 pres_id = clients[client]['presentation_id']
 folder_id = '1hScQyb1uMLQaBmNgyHa1dlFZAO2mKzxC'
 page_id = 'g202ad04c01_0_6'
-
-
+referring_domains = '{{referring_domains}}'
+referring_pages = '{{referring_pages}}'
 domains_image = 'domains_count.png'
 keywords_image = 'keyword_count.png'
 images = [domains_image, keywords_image] #A list that will be used later on in master function
@@ -49,6 +49,10 @@ def take_ahrefs_screenshots():
     sleep(5)
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight / 8);")
     driver.save_screenshot(domains_image)
+    r_domains = driver.find_element_by_xpath('//td[@class="text-xs-right highlight-link"][1]').text
+    find_replace_str(pres_id, referring_domains, r_domains )
+   # r_pages = driver.find_element_by_css_selector('td:contains("text-xs-right")').text
+    #find_replace_str(pres_id, referring_pages, r_pages)
     driver.find_element_by_xpath('//li[@name="se-overview-tabs"][2]/a').click()
     sleep(15)
     driver.implicitly_wait(10) # seconds
