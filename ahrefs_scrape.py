@@ -51,7 +51,9 @@ def take_ahrefs_screenshots():
     driver.save_screenshot(domains_image)
     r_domains = driver.find_element_by_xpath('//td[@class="text-xs-right highlight-link"][1]').text
     find_replace_str(pres_id, referring_domains, r_domains )
-   # r_pages = driver.find_element_by_css_selector('td:contains("text-xs-right")').text
+    # Below I am trying to use selenium to get the # of referring pages by the elements xpath but 
+    #I am yet to have any luck.
+    r_pages = driver.find_element_by_xpath('//td[contains(text(), "#REFERRING_PAGES#")]').text
     #find_replace_str(pres_id, referring_pages, r_pages)
     driver.find_element_by_xpath('//li[@name="se-overview-tabs"][2]/a').click()
     sleep(15)
