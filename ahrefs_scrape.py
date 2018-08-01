@@ -52,12 +52,10 @@ def take_ahrefs_screenshots():
     #This is a little confusing. I am automatically placing the number of referring domains on
     #the ahrefs page into the report over the string {{domains}}
     r_domains = driver.find_element_by_xpath('//td[@class="text-xs-right highlight-link"][1]').text
-    r_domains = r_domains.replace(',', '')
     find_replace_str(pres_id, referring_domains, r_domains )
     #I am automatically placing the number of referring pages from the ahrefs page into the
     #report over the string {{pages}}
     r_pages = driver.find_element_by_xpath('//span[@id="ref_pages_val"]/a').text
-    r_pages = r_pages.replace(',', '')
     find_replace_str(pres_id, referring_pages, r_pages)
     driver.find_element_by_xpath('//li[@name="se-overview-tabs"][2]/a').click()
     sleep(15)
@@ -67,7 +65,6 @@ def take_ahrefs_screenshots():
     #I am automatically placing the number of organic keywords from the ahrefs page into 
     #the report over the string {{org_keywords}}
     o_keywords = driver.find_element_by_xpath('//span[@id="organic_keywords_val"]').text
-    o_keywords = o_keywords.replace(',', '')
     find_replace_str(pres_id, org_keywords, o_keywords )
     driver.close()
 
