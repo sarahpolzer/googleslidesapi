@@ -361,7 +361,7 @@ def content_data_for_next_month_template():
 
 
 
-if __name__ == "__main__" or 'flask_screenshots':
+if __name__ == "__main__":
     app.run(port=port)
 
 
