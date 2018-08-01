@@ -23,8 +23,9 @@ domain_name = clients[client]['domain_name'].replace("https://", "").replace("ht
 pres_id = clients[client]['presentation_id']
 folder_id = '1hScQyb1uMLQaBmNgyHa1dlFZAO2mKzxC'
 page_id = 'g202ad04c01_0_6'
-referring_domains = '{{referring_domains}}'
-referring_pages = '{{referring_pages}}'
+referring_domains = '{{domains}}'
+referring_pages = '{{pages}}'
+org_keywords = '{{org_keywords}}'
 domains_image = 'domains_count.png'
 keywords_image = 'keyword_count.png'
 images = [domains_image, keywords_image] #A list that will be used later on in master function
@@ -53,13 +54,17 @@ def take_ahrefs_screenshots():
     find_replace_str(pres_id, referring_domains, r_domains )
     # Below I am trying to use selenium to get the # of referring pages by the elements xpath but 
     #I am yet to have any luck.
-    r_pages = driver.find_element_by_xpath('//td[contains(text(), "#REFERRING_PAGES#")]').text
-    #find_replace_str(pres_id, referring_pages, r_pages)
+    r_pages = driver.find_element_by_xpath('//span[@id="ref_pages_val"]/a').text
+    r_pages = r_pages.replace(',', '')
+    find_replace_str(pres_id, referring_pages, r_pages)
     driver.find_element_by_xpath('//li[@name="se-overview-tabs"][2]/a').click()
     sleep(15)
     driver.implicitly_wait(10) # seconds
     driver.execute_script("window.scrollTo(0, document.body.scrollHeight / 8);")
     driver.save_screenshot(keywords_image)
+    o_keywords = driver.find_element_by_xpath('//span[@id="organic_keywords_val"]').text
+    o_keywords = o_keywords.replace(',', '')
+    find_replace_str(pres_id, org_keywords, o_keywords )
     driver.close()
 
 #A function to crop the domains image so that it only contains the necessary charts for the reports
