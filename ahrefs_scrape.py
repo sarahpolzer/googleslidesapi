@@ -38,7 +38,6 @@ def take_ahrefs_screenshots():
     driver = webdriver.Chrome(chromedriver)
     driver.implicitly_wait(10) # seconds
     driver.get("https://ahrefs.com/user/login/")
-    #assert "Ahrefs" in driver.title
     elem = driver.find_element_by_id("email_input")
     elem.send_keys(ahrefs_un)
     elem = driver.find_element_by_name("password")
