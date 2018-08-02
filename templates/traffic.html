@@ -97,7 +97,7 @@ var myChart = new Chart(ctx, {
         backgroundColor: '#ffff00'
         {% elif 'Social' in key %}
         backgroundColor: '#0000FF'
-        {% else %}
+        {% else %}     
         backgroundColor: '#808080'
         {% endif %}
       }{% if not loop.last %},{% endif %}{% endif %}{% endfor %}

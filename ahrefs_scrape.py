@@ -1,11 +1,14 @@
 from __main__ import *
 
 #A function to take screenshots of domains and keywords charts from ahrefs and place them into reports
-def ahrefs_scrape_master(clients, client, referring_domains, referring_pages, org_keywords, domains_image, keywords_image, images, ahrefs_un, ahrefs_pw, folder_id, drive_service):
+def ahrefs_scrape_master(clients, client, domains_image, keywords_image, images, ahrefs_un, ahrefs_pw, folder_id, drive_service):
     pres_id = clients[client]['presentation_id']
+    referring_domains = '{{domains}}' #string to find and replace with ahrefs data in report
+    referring_pages = '{{pages}}' #string to find and replace with ahrefs data in report
+    org_keywords = '{{org_keywords}}'#string to find and replace with ahrefs data in report
+    traffic_value = '{{traffic_value}}'
     def take_ahrefs_screenshots():
         domain_name = clients[client]['domain_name'].replace("https://", "").replace("http://", "").replace('www/', 'www.')
-        #pres_id = clients[client]['presentation_id']
         chromedriver = "/usr/local/bin/chromedriver"
         os.environ["webdriver.chrome.driver"] = chromedriver
         driver = webdriver.Chrome(chromedriver)
@@ -30,6 +33,10 @@ def ahrefs_scrape_master(clients, client, referring_domains, referring_pages, or
         #report over the string {{pages}}
         r_pages = driver.find_element_by_xpath('//span[@id="ref_pages_val"]/a').text
         find_replace_str(pres_id, referring_pages, r_pages)
+        #I am automatically placing the traffic value from the ahrefs page into the report
+        #over the string {{traffic_value}}
+        t_value = driver.find_element_by_xpath('//h5[@id="numberOfOrganicTrafficCost"]/span').text
+        find_replace_str(pres_id, traffic_value, t_value)
         driver.find_element_by_xpath('//li[@name="se-overview-tabs"][2]/a').click()
         sleep(15)
         driver.implicitly_wait(10) # seconds

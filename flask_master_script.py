@@ -14,6 +14,8 @@ import requests
 from __main__ import *
 from multiprocessing import Process
 from flask import request
+from find_client_options import find_clients_options
+from find_client_options import convert_number_to_client
 
 #The port where the server will run
 port = 5005
@@ -21,10 +23,15 @@ port = 5005
 #reading JSON client data as to get the stored google analytics and What Converts data
 with open('client_information/client_information.json', 'r') as f:
      clients = json.load(f)
+#find clients options is an imported function that finds all valid clients and makes 
+#a big string that the User will see telling them which input buttons to press for each client
+clients_option = find_clients_options(clients)
 
-#asking the User who the client is
-client = input('Who is the client? ')
+#asking the User who the client is- clients_option string will appear in terminal
+client = input(clients_option)
 
+#converting number that was inputted into the client that the User meant to select
+client = convert_number_to_client(clients, client)
 
 
 #Getting the report month in the correct format
@@ -34,7 +41,7 @@ reporting_month = datetime.strftime(reporting_month, '%Y/%m' )
 reporting_month = datetime.strptime(reporting_month, '%Y/%m')
 
 #Assigning the number of months back
-ga_months_back = 6
+months_back = 6
 
 
 """Getting the Google Analytics View ID for the Traffic Charts"""
@@ -54,9 +61,9 @@ account_id = clients[client]['what_converts']
 #First we've got a function to get the months that we will pull API data from for Google Analytics
 #and What Converts
 
-def get_months(reporting_month,ga_months_back):
+def get_months(reporting_month, months_back):
     list_of_months = []
-    for i in range(int(ga_months_back)):
+    for i in range(int(months_back)):
         month_behind = reporting_month - relativedelta(months = i)
         month_behind = datetime.strftime(month_behind, '%Y/%m')
         list_of_months.append(month_behind)
@@ -149,8 +156,8 @@ def make_table(months, unique_channel_groupings,data, table):
 
 #This function makes an interestingly structured dictionary containing months, channels, and data
 #from table
-def get_data(reporting_month, ga_months_back, view_id):
-    months = get_months(reporting_month, ga_months_back)
+def get_data(reporting_month,months_back, view_id):
+    months = get_months(reporting_month, months_back)
     data = get_table(months, view_id)
     unique_channel_groupings = get_unique_channel_groupings(data)
     table = make_zero_table(months, unique_channel_groupings)
@@ -195,8 +202,8 @@ def rearrange_traffic_data_for_flask(data):
     return traffic_data
 
 #This kinda just does what I said above
-def traffic_data_for_flask(reporting_month, ga_months_back, view_id):
-    data = get_data(reporting_month, ga_months_back, view_id)
+def traffic_data_for_flask(reporting_month, months_back, view_id):
+    data = get_data(reporting_month, months_back, view_id)
     traffic_data = rearrange_traffic_data_for_flask(data)
     return traffic_data
 
@@ -266,8 +273,8 @@ def rearrange_lead_data_for_flask(list_of_months, month_lead):
         
 #This is kindof like the master function, it returns the dictionary of leads data that will
 #later be used in the Flask template.
-def leads_data_for_flask(reporting_month, ga_months_back, account_id):
-    mo_list = get_months(reporting_month, ga_months_back)
+def leads_data_for_flask(reporting_month, months_back, account_id):
+    mo_list = get_months(reporting_month, months_back)
     month_lead = pull_lead_data(mo_list, account_id)
     lead_data = rearrange_lead_data_for_flask(mo_list, month_lead)
     return lead_data
@@ -283,48 +290,7 @@ WhatConverts
 """
 
 
-""" 
-Beginning 
-to make
- Content Charts
- """
-
 #Collecting data for content posted during reporting month
-def content_posted_report_month():
-    now = datetime.now()
-    report_month = now.strftime('%B %Y')
-    master_list = []
-    report_month_data = {}
-    print("Answer these questions to provide information about content being posted in {}".format(report_month))
-    for article in range(3):
-        article_list = []
-        title = input("What is the content's title? ")
-        content_type = input("What is the content's type? ")
-        article_list.append(title)
-        article_list.append(content_type)
-        master_list.append(article_list)
-    report_month_data['columns'] = ['Title', 'Type']
-    report_month_data['data'] = master_list
-    return report_month_data
-
-#Collecting data for content that is going to be posted next month
-def content_posted_next_month():
-    now = datetime.now()
-    next_month = now + relativedelta(months=1)
-    next_month = next_month.strftime('%B %Y')
-    master_list = []
-    next_month_data = {}
-    print("Answer these questions to provide information about content being posted in {}".format(next_month))
-    for article in range(3):
-        article_list = []
-        title = input("What is the content title? ")
-        content_type = input("What is the content type? ")
-        article_list.append(title)
-        article_list.append(content_type)
-        master_list.append(article_list)
-    next_month_data['columns'] = ['Title', 'Type']
-    next_month_data['data'] = master_list
-    return next_month_data
 
 
 
@@ -333,10 +299,9 @@ def content_posted_next_month():
 consolidating data so that the Analytics data, WhatConverts data, and Content charts are all in 
 proper html templates with specific urls
 """
-traffic_data = traffic_data_for_flask(reporting_month, ga_months_back, view_id)
-leads_data = leads_data_for_flask(reporting_month,ga_months_back, account_id)
-report_month_data = content_posted_report_month()
-next_month_data = content_posted_next_month()
+traffic_data = traffic_data_for_flask(reporting_month, months_back, view_id)
+leads_data = leads_data_for_flask(reporting_month, months_back, account_id)
+
 
 @app.route('/traffic')
 def traffic_data_for_template():
@@ -349,16 +314,6 @@ def leads_data_for_template():
     data = leads_data
     return render_template('leads.html', data=data)
 
-            #The app route for the content chart for the reporting month
-@app.route('/content_report_month')
-def content_data_for_report_month_template():
-    data = report_month_data
-    return render_template('content_overview.html', data=data)
-            #The app route for the content chart for the following month
-@app.route('/content_next_month')
-def content_data_for_next_month_template():
-    data = next_month_data
-    return render_template('content_overview.html', data=data)
 
 if __name__ == "__main__":
     app.run(port=port, debug=False)

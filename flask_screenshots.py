@@ -67,14 +67,8 @@ def flask_screenshots_master(clients, client, url_list, port, folder_id, drive_s
             if 'traffic' in url:
                 shape_text = '{{traffic}}'
                 find_replace_img(pres_id, shape_text, new_image_url)
-            elif 'leads' in url:
-                shape_text = '{{leads}}'
-                find_replace_img(pres_id, shape_text, new_image_url)
-            elif 'report' in url:
-                shape_text = '{{content_report_month}}'
-                find_replace_img(pres_id, shape_text, new_image_url)
             else:
-                shape_text= '{{content_next_month}}'
+                shape_text = '{{leads}}'
                 find_replace_img(pres_id, shape_text, new_image_url)
             delete_png_file(image_url)
             delete_google_drive_file(file_id)
