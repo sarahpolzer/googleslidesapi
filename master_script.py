@@ -60,7 +60,6 @@ def main():
     extraneous_find_and_replace_master(clients,client)
     flask_screenshots_master(clients, client, url_list, port, folder_id, drive_service)
     ahrefs_scrape_master(clients, client, domains_image, keywords_image, images, ahrefs_un, ahrefs_pw, folder_id, drive_service)
-    
 
 
 

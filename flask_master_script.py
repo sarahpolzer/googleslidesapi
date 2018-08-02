@@ -241,6 +241,7 @@ def pull_lead_data(list_of_months, account_id):
                  params = params
                   )
             json_data = json.loads(x.text)
+            print(json_data)
             lead_dict[lead] = json_data[ "total_leads" ]
             month_lead[month] = lead_dict
     return month_lead
