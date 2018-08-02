@@ -234,7 +234,7 @@ def rearrange_lead_data_for_flask(list_of_months, month_lead):
     web_form = []
     for month in list_of_months:
         for lead_type in lead_types:
-            if month_lead[month][lead_type] and lead_type=='phone_call':
+            if month_lead[month][lead_type] >= 0 and lead_type=='phone_call':
                 phone_call.append(month_lead[month][lead_type])
             else:
                 web_form.append(month_lead[month][lead_type])
