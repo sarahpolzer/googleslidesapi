@@ -13,7 +13,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 
 def setup_googleslides_api():
-    SCOPES = ['https://www.googleapis.com/auth/presentations',  'https://www.googleapis.com/auth/drive.file', 'https://www.googleapis.com/auth/analytics']
+    SCOPES = ['https://www.googleapis.com/auth/presentations',  'https://www.googleapis.com/auth/drive', 'https://www.googleapis.com/auth/analytics']
     store = file.Storage('/Users/sarahpolzer/dev/googleslidesapi/credentials/credentials.json')
     creds = store.get()
     if not creds or creds.invalid:
@@ -42,7 +42,6 @@ def initialize_drive():
   '/Users/sarahpolzer/dev/googleslidesapi/credentials/service_account_creds.json', 'https://www.googleapis.com/auth/drive.file')
   drive_service = build('drive', 'v3', credentials=credentials)
   return drive_service
-
 
 
 
