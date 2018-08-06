@@ -37,7 +37,9 @@ In the separate terminal, type in python flask_master_script.py, and follow dire
 ![flaskmasterscript](screenshots_for_instructions/flask_master_script.png)
 
 
-The separate terminal should say that it is Running on http://127.0.0.1:5005/ 
+Wait a couple seconds. The separate terminal should now look like this. Leave it alone for now.
+
+![runningon](screenshots_for_instructions/running_on.png)
 
 Now go to VSCode in the project folder. At the top of the page, you should see a dropdown entitled View. Click on it and then press integrated terminal. The integrated terminal looks like this.
 
