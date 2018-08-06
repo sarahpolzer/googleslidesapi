@@ -1,4 +1,4 @@
-# Report Automation Documentation
+# Report Automation Documentation :star:
 
 _Welcome Folks!_ The purpose of this project is to automate the monthly reports. 
 
@@ -42,7 +42,7 @@ Ok cool so located in the client_information directory ~/dev/googleslidesapi/cli
 
 Above is a Google Presentation. In its URL, between presentation/d/ and /edit is a long sequence of letters and numbers. This is your presentation ID. Copy this sequence, and paste it into client_information.json next to "presentation_id": for the client. Make sure it is a string, or is enclosed by quotations. For example "presentation_id" : "1234567gfderfdgbrh3eteh"
 
-### Updating other information 
+### Updating Domain Name, WhatConvers, Organization Logo, or Google Analytics Information for a Single Client
 
 The same can be done if the organization logo, the WhatConverts ID, the domain name, or the Google Analytics ID of any one client changes. Just overwrite the old inforamtion in client_information.json with new client information. For example, if client_information.json says that the domain name for Beyond Exteriors is beyond_exteriors.org like this "Beyond Exteriors" : "beyond_exteriors.org", and the domain name has been changed to "beyond_exteriors.com", just overwrite the old dictionary value with "beyond_exteriors.com". 
 
