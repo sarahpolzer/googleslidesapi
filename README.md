@@ -10,6 +10,7 @@ _Welcome Folks!_ The purpose of this project is to automate the monthly reports.
 
 All reports will be based off of a template presentation. The template presentation will be comprised of shapes and bracketed words that will be found by the API and replaced with charts, images, times, and other words. Here is what the first slide of the template presentation will look like.
 
+![template](screenshots_for_instructions/template_report.png)
 
 ## Google APIs
 
