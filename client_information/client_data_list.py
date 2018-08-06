@@ -32,7 +32,20 @@ google_analytics = {'Fairfax Christ Lutheran Church' : '178504253',
                     'The Brown Firm' : '103336963',
                     'Beyond Exteriors': '139537851',
                     'Business Benefits Group' : '119560347',
-                    'Cobbdale Assisted Living': '126287032'}
+                    'Cobbdale Assisted Living': '126287032',
+                     "Comfort Home Care": "80278574"}
+
+org_logos = {'Fairfax Christ Lutheran Church' : "https://s27029.p370.sites.pressdns.com/wp-content/uploads/2018/04/celc-logo-white.png",
+            "FVCbank" : "https://www.fvcbank.com/wp-content/uploads/2018/04/fvcbank-logo-larger.png",
+            "Insure My Drone" : "https://insuremydrone.net/wp-content/uploads/2018/05/imd-logo.png",
+            "Kangovou" : 'https://www.kangovou.com/wp-content/uploads/2016/08/Screen-Shot-2016-08-25-at-1.19.22-PM.png',
+            'MFE Insurance' : "https://s26328.pcdn.co/wp-content/uploads/2018/03/mfe-logo-450x100.png"}
+
+
+
+
+
+
 
 clients = {}
 
@@ -52,6 +65,9 @@ def make_client_dictionary():
         for google_key in google_analytics.keys():
             if clients_key == google_key:
                 clients[clients_key]['google_analytics'] = google_analytics[google_key]
+        for org_logo_key in org_logos.keys():
+            if clients_key == org_logo_key and clients[clients_key]['org_logo'] is None:
+                clients[clients_key]['org_logo'] = org_logos[org_logo_key] 
     with open('client_information.json', 'w') as outfile:
         return json.dump(clients, outfile)
         
