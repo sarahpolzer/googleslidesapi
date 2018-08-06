@@ -20,8 +20,6 @@ from flask_screenshots import flask_screenshots_master
 from extraneous_find_and_replace import extraneous_find_and_replace_master
 from find_client_options import find_clients_options
 from find_client_options import convert_number_to_client
-from multiprocessing import Process
-import sys
 #Service for google slides API
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
 #Service for google drive API
@@ -40,7 +38,7 @@ page_id = 'g202ad04c01_0_6'
 
 """Reading client data so that functions are performed on correct report"""
 with open('client_information/client_information.json', 'r') as f:
-    clients = json.load(f)
+   clients = json.load(f)
 """displaying clients with reports assigned to numbers for the User to select """
 clients_option = find_clients_options(clients)
 """asking User who the client is"""
