@@ -18,7 +18,24 @@ Make sure you are in the correct directory. For me that looks like ~/dev/googles
 
 ![cd](screenshots_for_instructions/cd.png)
 
-Then I would make sure that I am in a virtual environment with all of the necessary packages, if pip, virtualenv,virtualenvwrapper are already installed on your computer, type in mkvirtuaenv googleslides api, and then type in pip install -r requirements.txt. Great, you should be ready. In the separate terminal, type in python flask_master_script.py, and follow directions for User inputs.
+Then I would make sure that I am in a virtual environment with all of the necessary packages, if pip, virtualenv,virtualenvwrapper are already installed on your computer, type in mkvirtuaenv googleslidesapi.
+
+![mkvirtualenv](screenshots_for_instructions/mkvirtualenv.png)
+
+Then type in workon googleslidesapi
+
+![workon](screenshots_for_instructions/workon.png)
+
+
+Finally, type in pip install -r requirements.txt. Great, you should be ready. 
+
+![requirements](screenshots_for_instructions/requirements.png)
+
+
+In the separate terminal, type in python flask_master_script.py, and follow directions for User inputs.
+
+![flaskmasterscript](screenshots_for_instructions/flask_master_script.png)
+
 
 The separate terminal should say that it is Running on http://127.0.0.1:5005/ 
 
