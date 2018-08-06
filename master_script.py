@@ -20,6 +20,8 @@ from flask_screenshots import flask_screenshots_master
 from extraneous_find_and_replace import extraneous_find_and_replace_master
 from find_client_options import find_clients_options
 from find_client_options import convert_number_to_client
+from multiprocessing import Process
+import sys
 #Service for google slides API
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
 #Service for google drive API
@@ -60,7 +62,5 @@ def main():
     extraneous_find_and_replace_master(clients,client)
     flask_screenshots_master(clients, client, url_list, port, folder_id, drive_service)
     ahrefs_scrape_master(clients, client, domains_image, keywords_image, images, ahrefs_un, ahrefs_pw, folder_id, drive_service)
-
-
-
+   
 main()
