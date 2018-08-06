@@ -14,7 +14,13 @@ All reports will be based off of a template presentation. The template presentat
 
 ## Google APIs
 
-It is important to note that we will be working with the Google Slides, Google Drive, and Google Analytics APIs. This can be complicated. Before you begin it is important that the template presentation, the client presentations (optional), and google analytics client pages be shared with your email with certain permissions. Talk to Jonathan, Elijah, or Anthony about gaining access to these before you begin.
+It is important to note that we will be working with the Google Slides, Google Drive, and Google Analytics APIs. This can be complicated. Before you begin it is important that the template presentation, the client presentations (optional), and google analytics client pages be shared with your email with certain permissions (admin), and with the three two one report generation service account (ttoreportgen@ttoreportgen-208316.iam.gserviceaccount.com). The clients that have accessible Google Analytics data are 321 Web Marketing, Beyond Exteriors, Business Benefits Group, Cobbdale Assisted Living, Comfort Home Care, Dirt Connections, Fairfax Christ Lutheran Church, Fairfax Mortgage Investments, FVCbank, Insure My Drone, Kangovou, Koncept Design + Build, KPPB Law, MFE Insurance, Paw Pals, Presidential Heat and Air, and The Brown Firm. Ask Jonathan, Elijah, or Anthony for permissions to all of those.
+
+![Jonathan](https://pbs.twimg.com/profile_images/943675116088643584/pfXkruLy.jpg)
+
+## WhatConverts
+
+You also need access to the WhatConverts data for 321 Web Marketing, Beyond Exteriors, Business Benefits Group, Cobbdale Assisted Living, Comfort Home Care, Dirt Connections, Fairfax Christ Lutheran Church, Fairfax Mortgage Investments, FVCbank, Insure My Drone, Kangovou, Koncept Design + Build, KPPB Law, MFE Insurance, Paw Pals, Presidential Heat and Air, and The Brown Firm. Ask Elijah, Anthony, or Jonathan for permissions for all of those.
 
 
 
@@ -24,7 +30,7 @@ In a very general way. There are template reports made for every single client w
 client_information/client_information.json. These reports should be shared with you on Google Slides. You should be logged into a google
 account and be inside of my virtual environment (requirements.txt). Great, so now open up a separate terminal using finder. The terminal icon looks like this
 
-![picture alt](https://cdn.dribbble.com/users/559169/screenshots/2456814/02-terminal_1x.png)
+![terminal_button](https://cdn.dribbble.com/users/559169/screenshots/2456814/02-terminal_1x.png)
 
 The terminal should look like this
 
