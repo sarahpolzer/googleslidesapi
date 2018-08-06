@@ -16,7 +16,7 @@ The terminal should look like this
 
 Make sure you are in the correct directory. For me that looks like ~/dev/googleslidesapi. You can change your directory by typing in cd and then your file path. So, I would type in cd ~/dev/googleslides api to get to my project located at Users/sarahpolzer/dev/googleslidesapi. 
 
-![alt text](screenshots_for_instructions/cd.png)
+![cd](screenshots_for_instructions/cd.png)
 
 Then I would make sure that I am in a virtual environment with all of the necessary packages, if pip, virtualenv,virtualenvwrapper are already installed on your computer, type in mkvirtuaenv googleslides api, and then type in pip install -r requirements.txt. Great, you should be ready. In the separate terminal, type in python flask_master_script.py, and follow directions for User inputs.
 
