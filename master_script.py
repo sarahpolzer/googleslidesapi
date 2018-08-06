@@ -40,11 +40,13 @@ page_id = 'g202ad04c01_0_6'
 with open('client_information/client_information.json', 'r') as f:
    clients = json.load(f)
 """displaying clients with reports assigned to numbers for the User to select """
-clients_option = find_clients_options(clients)
+#clients_option = find_clients_options(clients)
 """asking User who the client is"""
-client = input(clients_option)
+#client = input(clients_option)
 """converting the number that the User inputs to the client it represented"""
-client = convert_number_to_client(clients, client)
+#client = convert_number_to_client(clients, client)
+client_file = open('client.txt', 'r')
+client = client_file.read()
 
 """Important variables for ahrefs scrape. The ahrefs scrape master function has a lot of arguments"""
 domains_image = 'domains_count.png' #file that the domains ahrefs screenshot will be saved in

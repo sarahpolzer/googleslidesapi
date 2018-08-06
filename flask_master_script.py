@@ -35,6 +35,9 @@ client = input(clients_option)
 
 #converting number that was inputted into the client that the User meant to select
 client = convert_number_to_client(clients, client)
+client_file = open('client.txt','w')
+client_file.write(client)
+client_file.close()
 
 
 
