@@ -2,6 +2,21 @@
 
 _Welcome Folks!_ The purpose of this project is to automate the monthly reports. 
 
+## Why Report Automation?
+
+ At 321 we have a lot of clients. Every month, we generate a report for each of our clients. This was previously laboriously completed by people like Steve, who would sift through ahrefs and Google Analytics to get screenshots of charts. But no longer! 
+
+### Templates 
+
+All reports will be based off of a template presentation. The template presentation will be comprised of shapes and bracketed words that will be found by the API and replaced with charts, images, times, and other words. Here is what the first slide of the template presentation will look like.
+
+
+## Google APIs
+
+It is important to note that we will be working with the Google Slides, Google Drive, and Google Analytics APIs. This can be complicated. Before you begin it is important that the template presentation, the client presentations (optional), and google analytics client pages be shared with your email with certain permissions. Talk to Jonathan, Elijah, or Anthony about gaining access to these before you begin.
+
+
+
 ## How to Run Code
 
 In a very general way. There are template reports made for every single client with information in the file 
@@ -89,6 +104,8 @@ Above is a google presentations url. presentation/d/ and /edit is a long sequenc
 The same can be done if the organization logo, the WhatConverts ID, the domain name, or the Google Analytics ID of any one client changes. Just overwrite the old inforamtion in client_information.json with new client information. For example, if client_information.json says that the domain name for Beyond Exteriors is beyond_exteriors.org like this "Beyond Exteriors" : "beyond_exteriors.org", and the domain name has been changed to "beyond_exteriors.com", just overwrite the old dictionary value with "beyond_exteriors.com". 
 
 "Beyond Exteriors" : "beyond_exteriors.org" is now "Beyond Exteriors" : "beyond_exteriors.com"
+
+
 
 
 
