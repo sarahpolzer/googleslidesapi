@@ -22,7 +22,7 @@ It is important to note that we will be working with the Google Slides, Google D
 
 You also need access to the WhatConverts data for 321 Web Marketing, Beyond Exteriors, Business Benefits Group, Cobbdale Assisted Living, Comfort Home Care, Dirt Connections, Fairfax Christ Lutheran Church, Fairfax Mortgage Investments, FVCbank, Insure My Drone, Kangovou, Koncept Design + Build, KPPB Law, MFE Insurance, Paw Pals, Presidential Heat and Air, and The Brown Firm. Ask Elijah, Anthony, or Jonathan for permissions for all of those.
 
-
+![the team](screenshots_for_instructions/the_team.png)
 
 ## How to Run Code
 
