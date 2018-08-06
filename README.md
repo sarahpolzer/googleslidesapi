@@ -41,9 +41,16 @@ Wait a couple seconds. The separate terminal should now look like this. Leave it
 
 ![runningon](screenshots_for_instructions/running_on.png)
 
-Now go to VSCode in the project folder. At the top of the page, you should see a dropdown entitled View. Click on it and then press integrated terminal. The integrated terminal looks like this.
+Now go to VSCode in the project folder. At the top of the page, you should see a dropdown entitled View. Click on it and then press integrated terminal. 
 
-![picture alt](http://keysandstrokes.info/wp-content/uploads/2016/10/Visual-Studio-Code-Integrated-terminal.png)
+![integrated_terminal](screenshots_for_instructions/integrated_terminal.png)
+
+
+
+
+The integrated terminal looks like this.
+
+
 
 
  Make sure you are in the correct directory, and that you are in the correct virtual environment (type workon googleslidesapi). Ok now type into the terminal master_script.py.
