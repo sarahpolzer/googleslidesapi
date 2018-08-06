@@ -33,7 +33,25 @@ The code should run and you should see that the report for the client that you s
 Ok cool so located in the client_information directory ~/dev/googleslidesapi/client_data_list there is a script to generate client data and new template reports named after each client. There is a file called client_information.json that contains a clients dictionary. This dictionary has client names, and domain names, google analytics ids, what converts ids, organization logos, presentation ids. If you need to update any of these values just go into the file and update it. If you need to generate new template client reports, move the file client_data_list.py into the ~/dev/googleslides directory, and then run it by typing into cd ~/dev/googleslidesapi and python client_data_list.py. It will generate a new client dictionary (client_information.json) and new client template reports in Google Drive. After this process has completed, move client_data_list.py and client_information.json into the client_information directory ~/dev/googleslidesapi/client_information. :star:
 
 
- 
+ ### Updating presentation IDs.
+
+ Lets say that you want to make a new template report for a client without having to make template presentations for all clients by running client_data_list.py. Theres an easy solution. Just make a copy of the google presentation in your drive entitled template, and then rename it the name of the client. Then find its presentation id based on the presentations URL.
+
+
+![picture alt](https://i.ytimg.com/vi/VSz0WxdF0eM/maxresdefault.jpg)
+
+Above is a Google Presentation. In its URL, between presentation/d/ and /edit is a long sequence of letters and numbers. This is your presentation ID. Copy this sequence, and paste it into client_information.json next to "presentation_id": for the client. Make sure it is a string, or is enclosed by quotations. For example "presentation_id" : "1234567gfderfdgbrh3eteh"
+
+### Updating other information 
+
+The same can be done if the organization logo, the WhatConverts ID, the domain name, or the Google Analytics ID of any one client changes. Just overwrite the old inforamtion in client_information.json with new client information. For example, if client_information.json says that the domain name for Beyond Exteriors is beyond_exteriors.org like this "Beyond Exteriors" : "beyond_exteriors.org", and the domain name has been changed to "beyond_exteriors.com", just overwrite the old dictionary value with "beyond_exteriors.com". 
+
+"Beyond Exteriors" : "beyond_exteriors.org" is now "Beyond Exteriors" : "beyond_exteriors.com"
+
+
+
+
+
 
 
 
