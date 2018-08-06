@@ -46,14 +46,15 @@ Now go to VSCode in the project folder. At the top of the page, you should see a
 ![integrated_terminal](screenshots_for_instructions/integrated_terminal.png)
 
 
-
-
 The integrated terminal looks like this.
 
+![integrated_terminal_view](screenshots_for_instructions/integrated_terminal_view.png)
 
 
+ Make sure you are in the correct directory, and that you are in the correct virtual environment (type workon googleslidesapi). Ok now type into the integrated terminal python master_script.py.
 
- Make sure you are in the correct directory, and that you are in the correct virtual environment (type workon googleslidesapi). Ok now type into the terminal master_script.py.
+![master_script](screenshots_for_instructions/master_script.png)
+
 
 The code should run and you should see that the report for the client that you selected will be automated with charts, dates, logos, and more!!
 
