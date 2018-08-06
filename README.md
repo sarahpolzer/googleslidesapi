@@ -12,7 +12,7 @@ account and be inside of my virtual environment (requirements.txt). Great, so no
 
 The terminal should look like this
 
-![picture alt](https://www.imore.com/sites/imore.com/files/styles/xlarge/public/field/image/2016/02/say-terminal-command-screenshot.jpg?itok=jOSHQLCF)
+![opened terminal](screenshots_for_instructions/open_terminal.png)
 
 Make sure you are in the correct directory. For me that looks like ~/dev/googleslidesapi. You can change your directory by typing in cd and then your file path. So, I would type in cd ~/dev/googleslides api to get to my project located at Users/sarahpolzer/dev/googleslidesapi. 
 
@@ -69,7 +69,7 @@ Ok cool so located in the client_information directory ~/dev/googleslidesapi/cli
  Lets say that you want to make a new template report for a client without having to make template presentations for all clients by running client_data_list.py. Theres an easy solution. Just make a copy of the google presentation in your drive entitled template, and then rename it the name of the client. Then find its presentation id based on the presentations URL.
 
 
-![picture alt](https://i.ytimg.com/vi/VSz0WxdF0eM/maxresdefault.jpg)
+![presentation_url](screenshots_for_instructions/presentation_url.png)
 
 Above is a Google Presentation. In its URL, between presentation/d/ and /edit is a long sequence of letters and numbers. This is your presentation ID. Copy this sequence, and paste it into client_information.json next to "presentation_id": for the client. Make sure it is a string, or is enclosed by quotations. For example "presentation_id" : "1234567gfderfdgbrh3eteh"
 
