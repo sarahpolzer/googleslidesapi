@@ -23,7 +23,7 @@ def ahrefs_scrape_master(clients, client, domains_image, keywords_image, images,
         sleep(2)
         driver.implicitly_wait(10) # seconds
         driver.get("https://ahrefs.com/site-explorer/overview/v2/subdomains/fresh?target=" + domain_name)
-        sleep(5)
+        sleep(10)
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight / 8);")
         driver.save_screenshot(domains_image)
         #This is a little confusing. I am automatically placing the number of referring domains on
@@ -41,7 +41,10 @@ def ahrefs_scrape_master(clients, client, domains_image, keywords_image, images,
         driver.find_element_by_xpath('//li[@name="se-overview-tabs"][2]/a').click()
         sleep(15)
         driver.implicitly_wait(10) # seconds
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight / 8);")
+        if client=="Insure My Drone":
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight / 6.8);")
+        else:
+            driver.execute_script("window.scrollTo(0, document.body.scrollHeight / 8);")
         driver.save_screenshot(keywords_image)
         #I am automatically placing the number of organic keywords from the ahrefs page into 
         #the report over the string {{org_keywords}}
