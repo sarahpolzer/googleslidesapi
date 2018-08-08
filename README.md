@@ -34,7 +34,7 @@ account and be inside of my virtual environment (requirements.txt). Great, so no
 
 The terminal should look like this
 
-![opened terminal](screenshots_for_instructions/open_terminal.png)
+![opened terminal](screenshots_for_instructions/opened_terminal.png)
 
 Make sure you are in the correct directory. For me that looks like ~/dev/googleslidesapi. You can change your directory by typing in cd and then your file path. So, I would type in cd ~/dev/googleslides api to get to my project located at Users/sarahpolzer/dev/googleslidesapi. 
 
