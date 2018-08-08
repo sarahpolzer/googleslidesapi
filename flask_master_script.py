@@ -16,7 +16,8 @@ from multiprocessing import Process
 from flask import request
 from find_client_options import find_clients_options
 from find_client_options import convert_number_to_client
-
+from flask_screenshots import flask_screenshots_master
+from initialize_apis import get_slides_and_drive_apis
 
 
 
@@ -37,7 +38,6 @@ client = convert_number_to_client(clients, client)
 client_file = open('client.txt','w')
 client_file.write(client)
 client_file.close()
-
 
 
 #Getting the report month in the correct format
@@ -334,7 +334,8 @@ def flask_master(clients, client, port):
 
     if __name__ == "__main__":
         app.run(port=port, debug=False)
-     
+       
+
 
 flask_master(clients, client, port)
 

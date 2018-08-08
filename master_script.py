@@ -20,11 +20,8 @@ from flask_screenshots import flask_screenshots_master
 from extraneous_find_and_replace import extraneous_find_and_replace_master
 from find_client_options import find_clients_options
 from find_client_options import convert_number_to_client
-from sys import executable
-import subprocess
-from subprocess import Popen, CREATE_NEW_CONSOLE
 
-Popen([executable, 'flask_master_script.py'], creationflags=CREATE_NEW_CONSOLE)
+
 #Service for google slides API
 slides_service = get_slides_and_drive_apis.setup_googleslides_api()
 #Service for google drive API
@@ -52,7 +49,7 @@ client = client_file.read()
 """Closing and removing file"""
 client_file.close()
 os.remove('client.txt')
-client = "321 Web Marketing"
+
 """Important variables for ahrefs scrape. The ahrefs scrape master function has a lot of arguments"""
 domains_image = 'domains_count.png' #file that the domains ahrefs screenshot will be saved in
 keywords_image = 'keyword_count.png' #file that the keywords ahrefs screenshot will be saved in 
@@ -64,7 +61,6 @@ domain_name = clients[client]['domain_name'].replace("https://", "").replace("ht
 
 #This is the main function that ties it all together
 def main():
-    sleep(6)
     extraneous_find_and_replace_master(clients,client)
     flask_screenshots_master(clients, client, url_list, port, folder_id, drive_service)
     ahrefs_scrape_master(clients, client, domains_image, keywords_image, images, ahrefs_un, ahrefs_pw, folder_id, drive_service)
