@@ -26,7 +26,8 @@ You also need access to the WhatConverts data for 321 Web Marketing, Beyond Exte
 
 ## How to Automate a Report
 **Important Note: Always Automate Reports on the First of the Month**
-In a very general way, there are template reports made for every single client with information in the file 
+
+There are template reports made for every single client with information in the file 
 client_information/client_information.json. These reports should be shared with you on Google Slides. You should be logged into a google
 account and be inside of my virtual environment with required packages installed from requirements.txt. Great, so now open up a separate terminal using finder. The terminal icon looks like this
 
