@@ -38,6 +38,9 @@
         .color-legend.Soci {
           background-color: blue ;
         }
+        .color-legend.Paid {
+          background-color: darkgray
+        }
       </style>
 </head>
 
@@ -97,8 +100,10 @@ var myChart = new Chart(ctx, {
         backgroundColor: '#ffff00'
         {% elif 'Social' in key %}
         backgroundColor: '#0000FF'
+        {% elif 'Paid' in key %}
+        backgroundColor: '#A9A9A9'
         {% else %}     
-        backgroundColor: '#808080'
+        backgroundColor: '#777'
         {% endif %}
       }{% if not loop.last %},{% endif %}{% endif %}{% endfor %}
     ]
