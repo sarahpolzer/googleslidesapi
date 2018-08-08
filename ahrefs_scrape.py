@@ -48,8 +48,11 @@ def ahrefs_scrape_master(clients, client, domains_image, keywords_image, images,
         o_keywords = driver.find_element_by_xpath('//span[@id="organic_keywords_val"]').text
         find_replace_str(pres_id, org_keywords, o_keywords )
         driver.get('https://ahrefs.com/positions-explorer/new-keywords/v2/subdomains/us/2018-08-08/all/all/1/volume_desc?target=' + domain_name + '%2F')
-        n_keywords = driver.find_element_by_xpath('//div[@name="result_info"]/var').text
-        find_replace_str(pres_id, new_keywords, n_keywords)
+        try:
+            n_keywords = driver.find_element_by_xpath('//div[@name="result_info"]/var').text
+            find_replace_str(pres_id, new_keywords, n_keywords)
+        except:
+            pass
         driver.close()
 
     #A function to crop the domains image so that it only contains the necessary charts for the reports
