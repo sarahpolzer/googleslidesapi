@@ -41,7 +41,10 @@ org_logos = {'Fairfax Christ Lutheran Church' : "https://s27029.p370.sites.press
             "Kangovou" : 'https://www.kangovou.com/wp-content/uploads/2016/08/Screen-Shot-2016-08-25-at-1.19.22-PM.png',
             'MFE Insurance' : "https://s26328.pcdn.co/wp-content/uploads/2018/03/mfe-logo-450x100.png"}
 
+#what_converts = {'Comfort Home Care' : 
+                 # 'Presidential Heat and Air' : 
 
+#}
 
 
 
