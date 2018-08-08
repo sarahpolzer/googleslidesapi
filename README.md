@@ -82,6 +82,12 @@ The integrated terminal looks like this.
 The code should run and you should see that the report for the client that you selected will be automated with charts, dates, logos, and more!!
 
 
+Now look again at the terminal you ran flask_master_script.py on. It should look something like this.
+
+![terminal_running](screenshots_for_instructions/running_on_port.png)
+
+Please, please, please...press CTRL-C before repeating this process for another client. Nothing else-not CMD-Z or any of that nonsense. You'll get locked out of the port and the operation will be foiled.
+
 ## How to regenerate client template reports and update client information
 
 Ok cool so located in the client_information directory ~/dev/googleslidesapi/client_data_list there is a script to generate client data and new template reports named after each client. There is a file called client_information.json that contains a clients dictionary. This dictionary has client names, and domain names, google analytics ids, what converts ids, organization logos, presentation ids. If you need to update any of these values just go into the file and update it. Here  is a sample of json client data.
