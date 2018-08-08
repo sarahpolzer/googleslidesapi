@@ -25,7 +25,7 @@ You also need access to the WhatConverts data for 321 Web Marketing, Beyond Exte
 ![the team](screenshots_for_instructions/the_team.png)
 
 ## How to Automate a Report
-**Important Note: Always Automate Reports on the First of the Month**
+:exclamation:**Important Note: Always Automate Reports on the First of the Month**:exclamation:
 
 There are template reports made for every single client with information in the file 
 client_information/client_information.json. These reports should be shared with you on Google Slides. You should be logged into a google
