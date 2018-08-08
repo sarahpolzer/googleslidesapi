@@ -7,6 +7,7 @@ def ahrefs_scrape_master(clients, client, domains_image, keywords_image, images,
     referring_pages = '{{pages}}' #string to find and replace with ahrefs data in report
     org_keywords = '{{org_keywords}}'#string to find and replace with ahrefs data in report
     traffic_value = '{{traffic_value}}'
+    new_keywords = '{{new_keywords}}'
     def take_ahrefs_screenshots():
         domain_name = clients[client]['domain_name'].replace("https://", "").replace("http://", "").replace('www/', 'www.')
         chromedriver = "/usr/local/bin/chromedriver"
@@ -46,6 +47,9 @@ def ahrefs_scrape_master(clients, client, domains_image, keywords_image, images,
         #the report over the string {{org_keywords}}
         o_keywords = driver.find_element_by_xpath('//span[@id="organic_keywords_val"]').text
         find_replace_str(pres_id, org_keywords, o_keywords )
+        driver.get('https://ahrefs.com/positions-explorer/new-keywords/v2/subdomains/us/2018-08-08/all/all/1/volume_desc?target=' + domain_name + '%2F')
+        n_keywords = driver.find_element_by_xpath('//div[@name="result_info"]/var').text
+        find_replace_str(pres_id, new_keywords, n_keywords)
         driver.close()
 
     #A function to crop the domains image so that it only contains the necessary charts for the reports
