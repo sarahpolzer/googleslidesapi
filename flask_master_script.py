@@ -21,7 +21,7 @@ from find_client_options import convert_number_to_client
 
 
 #The port where the server will run
-port = 5005
+port = 5007
 
 #reading JSON client data as to get the stored google analytics and What Converts data
 with open('client_information/client_information.json', 'r') as f:
@@ -32,7 +32,6 @@ clients_option = find_clients_options(clients)
 
 #asking the User who the client is- clients_option string will appear in terminal
 client = input(clients_option)
-
 #converting number that was inputted into the client that the User meant to select
 client = convert_number_to_client(clients, client)
 client_file = open('client.txt','w')
