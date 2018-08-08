@@ -59,9 +59,12 @@ def flask_master(clients, client, port):
     """What
     Converts
     Data"""
-    #key and token
-    api_key = "273-f91b45f83365ec4b"
-    token = "26f9d7d7d282599f161076ad2e4eecfd"
+    #key and token for 321 API
+    api_key_general = "273-f91b45f83365ec4b"
+    token_general = "26f9d7d7d282599f161076ad2e4eecfd"
+    #key and token for Drew
+    api_key_drew = "436-3352b7f7894d34ca"
+    token_drew = "705405472f1c25e2bb36a7d8252bd4ad"
     #Account IDs based off of client dictionary
     account_id = clients[client]['what_converts']
 
@@ -223,7 +226,7 @@ def flask_master(clients, client, port):
 
 
     #This function pulls leads data based off of the list of months
-    def pull_lead_data(list_of_months, account_id):
+    def pull_lead_data(list_of_months, account_id, client):
         n = 0
         month_lead = {}
         lead_dict = {}
@@ -243,11 +246,18 @@ def flask_master(clients, client, port):
                     'lead_status': 'unique',
                     'account_id' : account_id
                 }
-                x = requests.get(
-                    'https://app.whatconverts.com/api/v1/leads',
-                    auth = (api_key,token),
-                    params = params
-                    )
+                if client == "Comfort Home Care" or client == "Presidential Heat and Air":
+                    x = requests.get(
+                        'https://app.whatconverts.com/api/v1/leads',
+                        auth = (api_key_drew,token_drew),
+                        params = params
+                        )
+                else:
+                    x = requests.get(
+                        'https://app.whatconverts.com/api/v1/leads',
+                        auth = (api_key_general,token_general),
+                        params = params
+                        )
                 json_data = json.loads(x.text)
                 lead_dict[lead] = json_data[ "total_leads" ]
                 month_lead[month] = lead_dict
@@ -283,7 +293,7 @@ def flask_master(clients, client, port):
     #later be used in the Flask template.
     def leads_data_for_flask(reporting_month, months_back, account_id):
         mo_list = get_months(reporting_month, months_back)
-        month_lead = pull_lead_data(mo_list, account_id)
+        month_lead = pull_lead_data(mo_list, account_id, client)
         lead_data = rearrange_lead_data_for_flask(mo_list, month_lead)
         return lead_data
 
